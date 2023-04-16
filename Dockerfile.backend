@@ -1,0 +1,21 @@
+FROM node:14-alpine
+
+WORKDIR /app/server
+
+COPY package*.json ./
+
+RUN npm install --production
+
+RUN npm install -g nodemon
+
+COPY app.js .
+COPY index.js .
+COPY server ./server
+
+# please use ls -a in container to see 
+COPY .env .
+
+
+EXPOSE 5000
+
+CMD ["npm", "start"] 
