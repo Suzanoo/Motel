@@ -65,6 +65,25 @@ exports.getOne = (Model, populateOption) =>
     });
   });
 
+exports.getOneBySlug = (Model, populateOption) =>
+  catchAsync(async (req, res, next) => {
+    console.log(req.params);
+    let query = Model.findOne({ slug: req.params.slug });
+    if (populateOption) query = query.populate(populateOption);
+    const doc = await query;
+
+    if (!doc) {
+      return next(new AppError('No document found with that slug', 404));
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: doc,
+      },
+    });
+  });
+
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
     const features = new APIFeatures(Model.find(), req.query)

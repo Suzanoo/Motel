@@ -3,22 +3,30 @@ const slugify = require('slugify');
 
 const roomSchema = new mongoose.Schema(
   {
+    roomName: {
+      type: 'string',
+      required: [true, 'Please define room type'],
+    },
     roomNumber: {
-      type: String,
+      type: 'string',
       required: [true, 'Please define room type'],
       unique: true,
     },
     roomType: {
-      type: String,
+      type: 'string',
       required: [true, 'Please define room type'],
       enum: {
-        values: ['sea view', 'gemini', 'delux', 'suit', 'middle age'],
-        message:
-          'Room type is either: sea view, gemini, delux, suite, middle age',
+        values: ['sea view', 'delux', 'suit', 'middle age'],
+        message: 'Room type is either: sea view, delux, suite, middle age',
       },
     },
-    slug: String,
+    slug: 'string',
     description: {
+      type: 'string',
+      default:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    accessories: {
       wifi: { type: Boolean, default: true },
       breakfast: { type: Boolean, default: true },
       bath: { type: Boolean, default: true },
@@ -26,17 +34,11 @@ const roomSchema = new mongoose.Schema(
       gym: { type: Boolean, default: true },
     },
     roomSize: {
-      type: String,
-      required: [true, 'Please define a room size'],
-      enum: {
-        values: ['1-bed', '2-beds'],
-        message: 'Room type is either: 1-bed, 2-beds',
-      },
-      default: '2-beds',
+      type: Number,
+      default: 75,
     },
     maxPersons: {
       type: Number,
-      required: [true, 'Please define a maximum persons'],
       default: 2,
     },
     price: {
@@ -53,7 +55,7 @@ const roomSchema = new mongoose.Schema(
         message: 'Discount price ({VALUE}) should be below regular price',
       },
     },
-    ratingsAverage: {
+    ratingAverage: {
       type: Number,
       default: 4.5,
       min: [1, 'Rating must be above 1.0'],
@@ -76,7 +78,11 @@ const roomSchema = new mongoose.Schema(
 roomSchema.index({ price: 1, ratingsAverage: -1 });
 
 // DOCUMENT MIDDLEWARE
-
+// Slug name
+roomSchema.pre('save', function (next) {
+  this.slug = slugify(`${this.roomNumber}-${this.roomName}`, { lower: true });
+  next();
+});
 // QUERY MIDDLEWARE
 
 // AGGREGATION MIDDLEWARE

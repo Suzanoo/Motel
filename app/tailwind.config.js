@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js, jsx, ts, tsx}'],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     screens: {
       sm: '460px',
@@ -8,7 +8,11 @@ module.exports = {
       lg: '960px',
       xl: '1140px',
     },
-    fontFamily: {},
+    fontFamily: {
+      primary: 'Gilda Display',
+      secondary: 'Barlow',
+      tertiary: 'Barlow Condensed',
+    },
     extend: {
       colors: {
         aries: '#0D0D0B',

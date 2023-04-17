@@ -1,7 +1,11 @@
-import React from 'react';
+import Rooms from '../components/Rooms';
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <>
+      <Rooms />
+    </>
+  );
 };
 
 export default Home;

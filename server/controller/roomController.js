@@ -3,6 +3,7 @@ const Room = require('../model/roomModel');
 
 exports.createRoom = CRUD.createOne(Room);
 exports.getRoom = CRUD.getOne(Room);
+exports.getRoomBySlug = CRUD.getOneBySlug(Room);
 exports.getAllRooms = CRUD.getAll(Room);
 exports.updateRoom = CRUD.updateOne(Room);
 exports.deleteRoom = CRUD.deleteOne(Room);
