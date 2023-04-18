@@ -17,8 +17,8 @@ const Rooms = () => {
   }, [dispatch]);
 
   return (
-    <section className="">
-      <div className="container mx-auto">
+    <section className="py-24">
+      <div className="container mx-auto lg:px-0 xl:px-0">
         {/* grid */}
         <div
           className="grid grid-cols-1 max-w-sm mx-auto gap-[30px]

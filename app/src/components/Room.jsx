@@ -23,18 +23,20 @@ const Room = ({ room }) => {
       </div>
       {/* Description */}
       <div className="text-center">
-        <Link to={`/room/${room._id}`}>
-          <h3 className="h3 text-gemini font-semibold">{room.roomName}</h3>
+        <Link to={`/room/${room.slug}`}>
+          <h3 className="h3 text-gemini hover:text-orange-400 font-semibold">
+            {room.roomName}
+          </h3>
         </Link>
         <p className="max-w-[300px] mx-auto text-[14px] mb-4">
           {room.description}
         </p>
       </div>
       {/* Btn */}
-      <div className="bg-gemini w-[80%] h-[40px] mx-auto flex justify-center items-center mb-2">
+      <div className="bg-gemini hover:bg-gray-500  w-[80%] h-[40px] mx-auto flex justify-center items-center mb-2">
         <Link
-          to={`/room/${room._id}`}
-          className="text-white hover:text-orange-300"
+          to={`/room/${room.slug}`}
+          className="text-white hover:text-orange-400"
         >
           Book now from ${room.price}
         </Link>
