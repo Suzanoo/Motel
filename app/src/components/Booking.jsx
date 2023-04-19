@@ -19,7 +19,7 @@ const Booking = () => {
         <div className="flex-1 border-r">
           <KidDropdown />
         </div>
-        <button className="flex-1 border-r bg-gemini hover:bg-gray-500 text-white">
+        <button className="btn btn-lg btn-primary flex-1 text-white h-full">
           Booking
         </button>
       </div>

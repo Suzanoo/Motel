@@ -15,11 +15,11 @@ module.exports = {
     },
     extend: {
       colors: {
-        aries: '#0D0D0B',
-        taurus: '#403B23',
-        gemini: '#595334',
-        cancer: '#733917',
-        leo: '#401C0F',
+        primary: '#0a0a0a',
+        accent: {
+          DEFAULT: '#595334',
+          hover: '#998d4d',
+        },
       },
     },
   },

@@ -1,24 +1,9 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { getAllRooms } from '../features/rooms/roomSlice';
 import Room from './Room';
 
-const Rooms = () => {
-  const rooms = useSelector((state) => state.rooms);
-  const dispatch = useDispatch();
-
-  rooms.rooms === null ? dispatch(getAllRooms()) : console.log('');
-
-  // Fetch rooms data on component mount
-  useEffect(() => {
-    dispatch(getAllRooms());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
-
+const Rooms = ({ rooms }) => {
   return (
-    <section className="py-24">
-      <div className="container mx-auto lg:px-0 xl:px-0">
+    <section className="py-8">
+      <div className="container mx-auto lg:px-0 lg:mb-2">
         {/* grid */}
         <div
           className="grid grid-cols-1 max-w-sm mx-auto gap-[30px]

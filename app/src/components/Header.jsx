@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import logo from '../assets/img/logo.png';
 
 const Header = () => {
   const [header, setHeader] = useState(false);
@@ -17,7 +20,9 @@ const Header = () => {
     >
       <div className="flex justify-between container mx-auto">
         {/* Logo */}
-        <a href="/">{header ? 'Logo Dark' : 'Logo White'}</a>
+        <Link to="/">
+          <img src={logo} alt="" className="" />
+        </Link>
 
         {/* Nav */}
         <nav

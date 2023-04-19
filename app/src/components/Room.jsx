@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { BsArrowsFullscreen, BsPeople } from 'react-icons/bs';
 import StarRating from './StarRating';
 
 const Room = ({ room }) => {
@@ -33,14 +32,22 @@ const Room = ({ room }) => {
         </p>
       </div>
       {/* Btn */}
-      <div className="bg-gemini hover:bg-gray-500  w-[80%] h-[40px] mx-auto flex justify-center items-center mb-2">
+      {/* <div className="bg-gemini hover:bg-gray-500  w-[80%] h-[40px] mx-auto flex justify-center items-center mb-2">
         <Link
           to={`/room/${room.slug}`}
           className="text-white hover:text-orange-400"
         >
           Book now from ${room.price}
         </Link>
-      </div>
+      </div> */}
+      <button className="btn btn-lg btn-primary mx-auto mb-2">
+        <Link
+          to={`/room/${room.slug}`}
+          className="text-white hover:text-orange-400"
+        >
+          Book now from ${room.price}
+        </Link>
+      </button>
     </div>
   );
 };
