@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import logo from '../assets/img/logo.png';
+import logo from '../public/assets/img/logo.png';
 
 const Footer = () => {
   const [footer, setFooter] = useState(false);
@@ -11,15 +11,13 @@ const Footer = () => {
   });
 
   return (
-    <footer
-      className={`${
-        footer ? 'bg-primary' : 'bg-transparent'
-      } fixed bottom-0  w-full`}
-    >
+    <footer className=" bg-primary fixed bottom-0 w-full py-3">
       <div className="flex container mx-auto text-white justify-between items-center">
-        <img src={logo} alt="" className="" />
+        <img src={logo} alt="" className="hover:scale-110" />
         <div>
-          <span className="text-[20px]">©</span>2023. All rights reservered.
+          Copyright
+          <span className="font-tertiary tracking-[3px] text-[15px]">©</span>
+          2023. All rights reservered.
         </div>
       </div>
     </footer>

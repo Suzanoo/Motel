@@ -31,7 +31,7 @@ const AdultDropdown = () => {
               onClick={() => setAdults(item.label)}
               as="li"
               key={index}
-              className="flex w-full h-12 border-b hover:bg-gemini
+              className="flex w-full h-12 border-b hover:bg-accent-hover
             hover:text-white items-center justify-center cursor-pointer"
             >
               {item.label}

@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import RoomDetail from './pages/RoomDetail';
+import RoomDetail from './pages/RoomDetial';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         {<Header />}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/room/:id" element={<RoomDetail />} />
+          <Route path="/room/:slug" element={<RoomDetail />} />
         </Routes>
         <Footer />
       </Router>

@@ -33,8 +33,8 @@ const KidDropdown = () => {
               as="li"
               key={index}
               placeholder="Kids"
-              className="flex w-full h-12 border-b last-of-type:border-b-0 hover:bg-gemini
-        hover:text-white items-center justify-center cursor-pointer"
+              className="flex w-full h-12 border-b hover:bg-accent-hover
+              hover:text-white items-center justify-center cursor-pointer"
             >
               {item.label}
             </Menu.Item>

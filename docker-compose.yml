@@ -21,7 +21,7 @@ services:
     depends_on:
       - mongodb
     networks:
-      - app-network  
+      - app-network
 
 volumes:
   mongodb-data:

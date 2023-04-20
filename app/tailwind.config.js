@@ -21,6 +21,9 @@ module.exports = {
           hover: '#998d4d',
         },
       },
+      // backgroundImage: {
+      //   room: "url('../assets/img/suit-3.png')",
+      // },
     },
   },
   plugins: [],

@@ -8,7 +8,7 @@ const Room = ({ room }) => {
       <div className="overflow-hidden">
         <img
           className="group-hover:scale-110 transition-all duration-300 w-full"
-          src={`${require(`../assets/img/${room.images[0]}`)}`}
+          src={`${require(`../public/assets/img/${room.images[0]}`)}`}
           alt=""
         />
       </div>
@@ -32,14 +32,6 @@ const Room = ({ room }) => {
         </p>
       </div>
       {/* Btn */}
-      {/* <div className="bg-gemini hover:bg-gray-500  w-[80%] h-[40px] mx-auto flex justify-center items-center mb-2">
-        <Link
-          to={`/room/${room.slug}`}
-          className="text-white hover:text-orange-400"
-        >
-          Book now from ${room.price}
-        </Link>
-      </div> */}
       <button className="btn btn-lg btn-primary mx-auto mb-2">
         <Link
           to={`/room/${room.slug}`}

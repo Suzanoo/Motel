@@ -3,7 +3,7 @@ import Room from './Room';
 const Rooms = ({ rooms }) => {
   return (
     <section className="py-8">
-      <div className="container mx-auto lg:px-0 lg:mb-2">
+      <div className="container mx-auto lg:px-4 lg:mb-12">
         {/* grid */}
         <div
           className="grid grid-cols-1 max-w-sm mx-auto gap-[30px]

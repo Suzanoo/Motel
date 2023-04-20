@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import logo from '../assets/img/logo.png';
+import logo from '../public/assets/img/logo.png';
 
 const Header = () => {
   const [header, setHeader] = useState(false);
@@ -18,17 +18,17 @@ const Header = () => {
         header ? 'bg-white py-6 shadow-lg' : 'bg-transparent py-8'
       } fixed z-50 w-full transition-all duration-300`}
     >
-      <div className="flex justify-between container mx-auto">
+      <div className="flex justify-between container mx-auto gap-x-4">
         {/* Logo */}
         <Link to="/">
-          <img src={logo} alt="" className="" />
+          <img src={logo} alt="" className="hover:scale-110" />
         </Link>
 
         {/* Nav */}
         <nav
           className={`${
             header ? 'text-gemini' : 'text-white'
-          } flex gap-x-4 font-tertiary tracking-[3px] text-[15px] items-center uppercase lg:gap-x-8`}
+          } flex gap-x-2 lg:gap-x-8 font-tertiary tracking-[3px] text-[15px] items-center uppercase `}
         >
           <a href="/" className="hover:text-orange-400 transition">
             Home
