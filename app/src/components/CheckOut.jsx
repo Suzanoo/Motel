@@ -5,6 +5,12 @@ import '../public/css/datepicker.css';
 import { BsCalendar } from 'react-icons/bs';
 
 const CheckOut = ({ value, onChange }) => {
+  const [placeholder, setPlaceholder] = useState('Check in');
+
+  const handleChange = (date) => {
+    onChange(date);
+    setPlaceholder(date.toLocaleDateString('en-GB'));
+  };
   return (
     <div className="relative flex items-center justify-end h-full">
       <div className="absolute z-10 pr-8">
@@ -15,8 +21,8 @@ const CheckOut = ({ value, onChange }) => {
       <DatePicker
         className="w-full h-full cursor-pointer"
         selected={value}
-        placeholderText="Check out"
-        onChange={(date) => onChange(date)}
+        placeholderText={placeholder}
+        onChange={handleChange}
         dateFormat="dd/MM/yyyy"
       />
     </div>
