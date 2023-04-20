@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <header
       className={`${
-        header ? 'bg-white py-6 shadow-lg' : 'bg-transparent py-8'
+        header ? 'bg-white py-4 shadow-lg' : 'bg-transparent py-6'
       } fixed z-50 w-full transition-all duration-300`}
     >
       <div className="flex justify-between container mx-auto gap-x-4">

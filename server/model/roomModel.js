@@ -83,6 +83,16 @@ roomSchema.pre('save', function (next) {
   this.slug = slugify(`${this.roomNumber}-${this.roomName}`, { lower: true });
   next();
 });
+
+// Update room slug on update
+roomSchema.pre('save', function (next) {
+  if (this.isModified('roomNumber')) {
+    // update slug only if roomNumber is modified
+    this.slug = slugify(`${this.roomNumber}-${this.roomName}`, { lower: true });
+  }
+  next();
+});
+
 // QUERY MIDDLEWARE
 
 // AGGREGATION MIDDLEWARE

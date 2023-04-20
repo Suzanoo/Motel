@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import logo from '../public/assets/img/logo.png';
 
 const Footer = () => {
-  const [footer, setFooter] = useState(false);
+  // const [footer, setFooter] = useState(false);
 
-  useEffect(() => {
-    window.addEventListener('scroll', () => {
-      window.scrollY > 50 ? setFooter(true) : setFooter(false);
-    });
-  });
+  // useEffect(() => {
+  //   window.addEventListener('scroll', () => {
+  //     window.scrollY > 50 ? setFooter(true) : setFooter(false);
+  //   });
+  // });
 
   return (
-    <footer className=" bg-primary fixed bottom-0 w-full py-3">
+    <footer className=" bg-primary bottom-0 w-full py-3">
       <div className="flex container mx-auto text-white justify-between items-center">
         <img src={logo} alt="" className="hover:scale-110" />
         <div>

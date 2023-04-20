@@ -1,13 +1,12 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FaCheck } from 'react-icons/fa';
 
 import IconRender from '../components/IconRender';
-
 import CheckIn from '../components/CheckIn';
 import CheckOut from '../components/CheckOut';
-import AdultDropdown from '../components/AdultDropdown';
-import KidDropdown from '../components/KidDropdown';
+import Guests from '../components/GuestDropdown';
 import ScrollToTop from '../components/ScrollToTop';
 
 const RoomDetail = () => {
@@ -18,9 +17,26 @@ const RoomDetail = () => {
     return item.slug === slug;
   });
 
+  // State init
+  const [checkInDate, setCheckInDate] = useState(null);
+  const [checkOutDate, setCheckOutDate] = useState(null);
+  const [guest, setGuest] = useState('2 Guest');
+
+  // Submit form
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const reserve = {
+      roomType: room.roomName,
+      checkInDate,
+      checkOutDate,
+      guest,
+    };
+    console.log(reserve);
+  };
+
   return (
     <section className="bg-orange-200 relative">
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
 
       {/* banner */}
       <div className="flex flex-col relative justify-center items-center">
@@ -48,26 +64,49 @@ const RoomDetail = () => {
 
           {/* right */}
           <div className="w-full h-full lg:w-[40%]">
-            <div className="bg-accent/20 py-6 px-6">
+            {/* Form */}
+            <form onSubmit={onSubmit} className="bg-accent/20 py-6 px-6">
               <div className="flex flex-col space-y-6">
                 <h3 className="h3 font-bold font-primary">Your Reservation</h3>
-                <div className="h-[60px]">
-                  <CheckIn />
+
+                {/* Room type */}
+                <div className="h-[60px] w-full bg-white flex items-center justify-left">
+                  <span className="ml-8">{room.roomName}</span>
                 </div>
+                {/* Check in */}
                 <div className="h-[60px]">
-                  <CheckOut />
+                  <CheckIn
+                    id="checkInDate2"
+                    selectedDate={checkInDate}
+                    onChange={(date) => setCheckInDate(date)}
+                  />
                 </div>
+                {/* Check out */}
                 <div className="h-[60px]">
-                  <AdultDropdown />
+                  <CheckOut
+                    id="checkOutDate2"
+                    selectedDate={checkOutDate}
+                    onChange={(date) => setCheckOutDate(date)}
+                  />
                 </div>
+                {/* Check guests */}
                 <div className="h-[60px]">
-                  <KidDropdown />
+                  <Guests
+                    value={guest}
+                    onChange={(value) => setGuest(value)}
+                    id="guest2"
+                  />
                 </div>
-                <button className="btn btn-lg btn-primary w-full py-2">
+                <button
+                  type="submit"
+                  className="btn btn-lg btn-primary w-full py-2"
+                >
                   Book now form {room.price} THB
                 </button>
               </div>
-            </div>
+            </form>
+
+            {/* Hotel Rules */}
             <div className="mt-4">
               <h3 className="h3 font-bold font-primary">Hotel Rules</h3>
               <p>

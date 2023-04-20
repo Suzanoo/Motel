@@ -37,7 +37,7 @@ const Room = ({ room }) => {
           to={`/room/${room.slug}`}
           className="text-white hover:text-orange-400"
         >
-          Book now from ${room.price}
+          Book now from {room.price} THB
         </Link>
       </button>
     </div>

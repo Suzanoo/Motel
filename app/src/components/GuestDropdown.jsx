@@ -1,24 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Menu } from '@headlessui/react';
 import { BsChevronDown } from 'react-icons/bs';
 
 const adultOption = [
-  { label: '1 Adult', value: 1 },
-  { label: '2 Adults', value: 2 },
-  { label: 'More...', value: 'X' },
+  { label: '1 Guest', value: 1 },
+  { label: '2 Guests', value: 2 },
+  { label: '3 Guests', value: 3 },
 ];
 
-const AdultDropdown = () => {
-  const [adults, setAdults] = useState('2 Adults');
+const Guests = ({ value, onChange }) => {
+  const [selectedOption, setSelectedOption] = useState(value);
 
-  useEffect(() => {
-    // console.log(adults);
-  }, [adults]);
+  const handleSelect = (option) => {
+    setSelectedOption(option);
+    onChange(option);
+  };
 
   return (
     <Menu as="div" className="bg-white w-full h-full relative">
       <Menu.Button className="w-full h-full flex items-center justify-between px-8 text-gray-400">
-        {adults}
+        {selectedOption}
         <BsChevronDown className="text-base" />
       </Menu.Button>
       <Menu.Items
@@ -28,7 +29,7 @@ const AdultDropdown = () => {
         {adultOption.map((item, index) => {
           return (
             <Menu.Item
-              onClick={() => setAdults(item.label)}
+              onClick={() => handleSelect(item.label)}
               as="li"
               key={index}
               className="flex w-full h-12 border-b hover:bg-accent-hover
@@ -43,4 +44,4 @@ const AdultDropdown = () => {
   );
 };
 
-export default AdultDropdown;
+export default Guests;

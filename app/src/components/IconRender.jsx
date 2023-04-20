@@ -1,6 +1,6 @@
 import {
   FaWifi,
-  FaBed,
+  FaUtensils,
   FaBath,
   FaSwimmingPool,
   FaDumbbell,
@@ -9,7 +9,7 @@ import {
 const IconRender = ({ accessories }) => {
   // Icon setup to display
   const wifiIcon = <FaWifi className="inline-block" />;
-  const breakfastIcon = <FaBed className="inline-block" />;
+  const breakfastIcon = <FaUtensils className="inline-block" />;
   const bathIcon = <FaBath className="inline-block" />;
   const swimmingIcon = <FaSwimmingPool className="inline-block" />;
   const gymIcon = <FaDumbbell className="inline-block" />;

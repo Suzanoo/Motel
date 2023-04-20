@@ -4,8 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../public/css/datepicker.css';
 import { BsCalendar } from 'react-icons/bs';
 
-const CheckIn = () => {
-  const [startDate, setStartDate] = useState(false);
+const CheckIn = ({ value, onChange }) => {
   return (
     <div className="relative flex items-center justify-end h-full">
       <div className="absolute z-10 pr-8">
@@ -15,9 +14,10 @@ const CheckIn = () => {
       </div>
       <DatePicker
         className="w-full h-full cursor-pointer"
-        selected={startDate}
+        selected={value}
         placeholderText="Check in"
-        onChange={(date) => setStartDate(date)}
+        onChange={(date) => onChange(date)}
+        dateFormat="dd/MM/yyyy"
       />
     </div>
   );
