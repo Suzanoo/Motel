@@ -20,14 +20,17 @@ function UpdateProduct() {
   );
 
   const initialState = {
-    name: '',
-    duration: '',
-    maxGroupSize: '',
-    difficulty: '',
+    roomName: '',
+    roomNumber: '',
+    roomType: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    accessories: [],
+    roomSize: '',
+    maxPerson: 2,
     price: '',
-    summary: '',
-    description: '',
-    imageCover: '',
+    priceDiscount: 0,
+    images: '',
   };
 
   const [formData, setFormData] = useState(initialState);
@@ -131,7 +134,7 @@ function UpdateProduct() {
           </div>
           {/* Room Type */}
           <div className="form-group">
-            <label htmlFor="roomType"></label>
+            <label htmlFor="roomType">Room Type</label>
             <select name="roomType" value={roomType} onChange={handleChange}>
               <option value="">--Choose...--</option>
               {['sea view', 'delux', 'suit', 'middle age'].map(

@@ -3,46 +3,41 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
 import {
   createNewProduct,
   getAllProducts,
   reset,
 } from '../features/product/productSlice';
 
-const options = ['easy', 'medium', 'difficulty'];
 function CreateNewProduct() {
   // 1).Initial state
   const initial = {
-    startLocation: {
-      address: '',
-    },
-    name: '',
-    duration: '',
-    maxGroupSize: '',
-    difficulty: '',
+    roomName: '',
+    roomNumber: '',
+    roomType: '',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    accessories: [],
+    roomSize: '',
+    maxPerson: 2,
     price: '',
-    summary: '',
-    description: '',
-    imageCover: '',
-    startDates: [null, null, null],
+    priceDiscount: 0,
+    images: '',
   };
 
   // 2).Configure form fields
   const [formData, setFormData] = useState(initial);
   const {
-    startLocation,
-    name,
-    duration,
-    maxGroupSize,
-    difficulty,
-    price,
-    summary,
+    roomName,
+    roomNumber,
+    roomType,
     description,
-    imageCover,
-    startDates,
+    accessories,
+    roomSize,
+    maxPerson,
+    price,
+    priceDiscount,
+    images,
   } = formData;
 
   const navigate = useNavigate();
@@ -72,37 +67,20 @@ function CreateNewProduct() {
     }));
   };
 
-  const handleStartDate = (date, index) => {
-    const newStartDates = [...formData.startDates];
-    newStartDates[index] = date;
-    setFormData({ ...formData, startDates: newStartDates });
-  };
-
-  const handleStartLocation = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      startLocation: {
-        ...prevState.startLocation,
-        [name]: value,
-      },
-    }));
-  };
-
   const onSubmit = async (e) => {
     e.preventDefault();
 
     const productData = {
-      startLocation,
-      name,
-      duration: +duration, // convert to int
-      maxGroupSize: +maxGroupSize, // convert to int
-      difficulty,
-      price: +price, // convert to int
-      summary,
+      roomName,
+      roomNumber,
+      roomType,
       description,
-      imageCover,
-      startDates,
+      // accessories,
+      roomSize: +roomSize,
+      maxPerson: +maxPerson,
+      price: +price,
+      priceDiscount: +priceDiscount,
+      images,
     };
     await dispatch(createNewProduct(productData));
     navigate('/home');
@@ -119,64 +97,78 @@ function CreateNewProduct() {
       </section>
       <section className="form">
         <form onSubmit={onSubmit}>
+          {/* Name */}
           <div className="form-group">
-            <label htmlFor="startLocation.address">
-              Start Location Address
-            </label>
+            <label htmlFor="roomName">Name</label>
             <input
+              className="form-control"
               type="text"
-              name="address"
-              value={startLocation.address}
-              onChange={handleStartLocation}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="name">Product Name</label>
-            <input
-              type="text"
-              name="name"
-              value={name}
+              name="roomName"
+              value={roomName}
               onChange={handleChange}
-              placeholder="Name range 5-50 characters"
-              required
             />
           </div>
+          {/* Room Number */}
           <div className="form-group">
-            <label htmlFor="duration">Product Duration</label>
+            <label htmlFor="roomNumber">Room Number</label>
+            <input
+              className="form-control"
+              type="text"
+              name="roomNumber"
+              value={roomNumber}
+              onChange={handleChange}
+            />
+          </div>
+          {/* Room Type */}
+          <div className="form-group">
+            <label htmlFor="roomType">Room Type</label>
+            <select name="roomType" value={roomType} onChange={handleChange}>
+              <option value="">--Choose...--</option>
+              {['sea view', 'delux', 'suit', 'middle age'].map(
+                (option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                )
+              )}
+            </select>
+          </div>
+          {/* Description */}
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <input
+              className="form-control"
+              type="text"
+              name="description"
+              value={description}
+              onChange={handleChange}
+            />
+          </div>
+          {/* Accessories */}
+
+          {/* Room Size */}
+          <div className="form-group">
+            <label htmlFor="roomSize">Room Size</label>
             <input
               className="form-control"
               type="number"
-              name="duration"
-              value={duration}
+              name="roomSize"
+              value={roomSize}
               onChange={handleChange}
-              required
             />
           </div>
+          {/* Max Guests */}
           <div className="form-group">
-            <label htmlFor="maxGroupSize">Maximum Group Size</label>
+            <label htmlFor="maxPerson">Max Guest</label>
             <input
+              className="form-control"
               type="number"
-              name="maxGroupSize"
-              value={maxGroupSize}
+              name="maxPerson"
+              value={maxPerson}
               onChange={handleChange}
-              required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="difficulty">Difficulty</label>
-            <select
-              name="difficulty"
-              value={difficulty}
-              onChange={handleChange}
-            >
-              <option value="">--Choose...--</option>
-              {options.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Price */}
           <div className="form-group">
             <label htmlFor="price">Price</label>
             <input
@@ -185,49 +177,28 @@ function CreateNewProduct() {
               name="price"
               value={price}
               onChange={handleChange}
-              required
             />
           </div>
+          {/* Price Discount*/}
           <div className="form-group">
-            <label htmlFor="summary">Product Summary</label>
-            <textarea
-              name="summary"
-              value={summary}
-              onChange={handleChange}
-            ></textarea>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="description">Product Description</label>
-            <textarea
+            <label htmlFor="priceDiscount">Price Discount</label>
+            <input
               className="form-control"
-              name="description"
-              value={description}
-              required
+              type="number"
+              name="priceDiscount"
+              value={priceDiscount}
               onChange={handleChange}
-            ></textarea>
+            />
           </div>
+          {/* Images */}
           <div className="form-group">
-            <label htmlFor="imageCover">Cover Image</label>
+            <label htmlFor="imageCover">Images</label>
             <input
               type="text"
-              name="imageCover"
-              value={imageCover}
+              name="images"
+              value={images}
               onChange={handleChange}
-              required
             />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="startDates">Start Dates</label>
-            {startDates.map((el, index) => (
-              <DatePicker
-                key={index}
-                selected={el}
-                onChange={(date) => handleStartDate(date, index)}
-                dateFormat="yyyy/MM/dd"
-              />
-            ))}
           </div>
 
           <div className="form-group">
