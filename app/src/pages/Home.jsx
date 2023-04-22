@@ -22,7 +22,7 @@ const Home = () => {
     <>
       {rooms && <HeroSlider rooms={rooms} />}
 
-      <div className="container mx-auto relative">
+      <div className="container mx-auto relative mb-8">
         <div
           className="bg-[#998d4d] mt-4 p-4 lg:shadow-xl lg:absolute 
         lg:left-0 lg:right-0 lg:p-0 lg:z-30 lg:-top-12"

@@ -1,19 +1,14 @@
 // import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../public/assets/img/logo.png';
 
 const Footer = () => {
-  // const [footer, setFooter] = useState(false);
-
-  // useEffect(() => {
-  //   window.addEventListener('scroll', () => {
-  //     window.scrollY > 50 ? setFooter(true) : setFooter(false);
-  //   });
-  // });
-
   return (
     <footer className=" bg-primary bottom-0 w-full py-3">
       <div className="flex container mx-auto text-white justify-between items-center">
-        <img src={logo} alt="" className="hover:scale-110" />
+        <Link to="/">
+          <img src={logo} alt="" className="hover:scale-110" />
+        </Link>
         <div>
           Copyright
           <span className="font-tertiary tracking-[3px] text-[15px]">©</span>

@@ -36,7 +36,7 @@ const RoomDetail = () => {
 
   return (
     <section className="bg-orange-200 relative">
-      {/* <ScrollToTop /> */}
+      <ScrollToTop />
 
       {/* banner */}
       <div className="flex flex-col relative justify-center items-center">
