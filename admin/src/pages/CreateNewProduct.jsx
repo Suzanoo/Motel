@@ -67,7 +67,7 @@ function CreateNewProduct() {
     }));
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     const productData = {
@@ -82,12 +82,12 @@ function CreateNewProduct() {
       priceDiscount: +priceDiscount,
       images,
     };
-    await dispatch(createNewProduct(productData));
+    dispatch(createNewProduct(productData));
     navigate('/home');
-    dispatch(getAllProducts('http://localhost:3000/api/v1/products'));
+    dispatch(getAllProducts());
   };
 
-  if (isLoading) return <div class="spinner"></div>;
+  if (isLoading) return <div className="spinner"></div>;
 
   //5).JSX Rendering
   return (

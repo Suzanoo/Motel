@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import productService from './productService';
 
 // Fetch products from localStorage & cast to JSON object
-const products = JSON.parse(localStorage.getItem('rooms'));
+const products = JSON.parse(localStorage.getItem('products'));
 
 // Initialize state
 const initialState = {
@@ -87,7 +87,7 @@ export const deleteProduct = createAsyncThunk(
 
 // Create slice
 export const productSlice = createSlice({
-  name: 'rooms',
+  name: 'products',
   initialState,
   reducers: {
     reset: (state) => {
@@ -106,7 +106,7 @@ export const productSlice = createSlice({
       .addCase(getAllProducts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.rooms = action.payload;
+        state.products = action.payload;
       })
       .addCase(getAllProducts.rejected, (state, action) => {
         state.isLoading = false;
@@ -119,7 +119,7 @@ export const productSlice = createSlice({
       .addCase(createNewProduct.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.rooms = action.payload;
+        state.products = action.payload;
       })
       .addCase(createNewProduct.rejected, (state, action) => {
         state.isLoading = false;

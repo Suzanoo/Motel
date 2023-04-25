@@ -28,50 +28,53 @@ const Booking = () => {
     };
     console.log(reserve);
   };
-  return (
-    <form onSubmit={onSubmit} className="h-[300px] lg:h-[70px]">
-      <div className="flex flex-col w-full h-full lg:flex-row">
-        {/* Room type */}
-        <div className="flex-1 border-r">
-          <RoomType
-            value={roomType}
-            onChange={(value) => setRoomType(value)}
-            id="roomType"
-          />
-        </div>
-        {/* Check in */}
-        <div className="flex-1 border-r">
-          <CheckIn
-            id="checkInDate"
-            selectedDate={checkInDate}
-            onChange={(date) => setCheckInDate(date)}
-          />
-        </div>
-        {/* Check out */}
-        <div className="flex-1 border-r">
-          <CheckOut
-            id="checkOutDate"
-            selectedDate={checkOutDate}
-            onChange={(date) => setCheckOutDate(date)}
-          />
-        </div>
-        {/* Guests */}
-        <div className="flex-1 border-r">
-          <Guests
-            value={guest}
-            onChange={(value) => setGuest(value)}
-            id="guest"
-          />
-        </div>
 
-        <button
-          type="submit"
-          className="btn btn-lg btn-primary flex-1 text-white h-full"
-        >
-          Booking
-        </button>
-      </div>
-    </form>
+  return (
+    <>
+      <form onSubmit={onSubmit} className="h-[300px] lg:h-[70px]">
+        <div className="flex flex-col w-full h-full lg:flex-row">
+          {/* Room type */}
+          <div className="flex-1 border-r">
+            <RoomType
+              value={roomType}
+              onChange={(value) => setRoomType(value)}
+              id="roomType"
+            />
+          </div>
+          {/* Check in */}
+          <div className="flex-1 border-r">
+            <CheckIn
+              id="checkInDate"
+              selectedDate={checkInDate}
+              onChange={(date) => setCheckInDate(date)}
+            />
+          </div>
+          {/* Check out */}
+          <div className="flex-1 border-r">
+            <CheckOut
+              id="checkOutDate"
+              selectedDate={checkOutDate}
+              onChange={(date) => setCheckOutDate(date)}
+            />
+          </div>
+          {/* Guests */}
+          <div className="flex-1 border-r">
+            <Guests
+              value={guest}
+              onChange={(value) => setGuest(value)}
+              id="guest"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-lg btn-primary flex-1 text-white h-full"
+          >
+            Booking
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

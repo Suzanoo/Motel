@@ -93,15 +93,15 @@ function UpdateProduct() {
     };
 
     try {
-      await dispatch(updateProduct({ id, productData }));
+      dispatch(updateProduct({ id, productData }));
       navigate('/home');
-      dispatch(getAllProducts('http://localhost:3000/api/v1/products'));
+      dispatch(getAllProducts());
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
-  if (isLoading) return <div class="spinner"></div>;
+  if (isLoading) return <div className="spinner"></div>;
 
   return (
     <>

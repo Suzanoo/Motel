@@ -10,7 +10,7 @@ const Home = () => {
   const rooms = useSelector((state) => state.rooms);
   const dispatch = useDispatch();
 
-  if (rooms.rooms === null) dispatch(getAllRooms());
+  // if (rooms.rooms === null) dispatch(getAllRooms());
 
   // Fetch rooms data on component mount
   useEffect(() => {

@@ -8,12 +8,12 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --production
 
-# Copy app files & build app
+# Copy app files & build tailwind & build app
 COPY . .
 RUN npm run build
 
 # Expose port
-EXPOSE 3001
+EXPOSE 3000
 
 # Start app
 CMD [ "npm", "start" ]

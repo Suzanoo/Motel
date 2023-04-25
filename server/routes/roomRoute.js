@@ -4,6 +4,8 @@ const authCtrl = require('../controller/authController');
 
 const router = express.Router();
 
+router.route('/').get(roomCtrl.getAllRooms);
+
 // Protect routes
 router.use(authCtrl.protect);
 
@@ -11,7 +13,7 @@ router.use(authCtrl.protect);
 router.use(authCtrl.restrictTo('admin'));
 
 //
-router.route('/').get(roomCtrl.getAllRooms).post(roomCtrl.createRoom);
+router.post(roomCtrl.createRoom);
 
 router.route('/:id').patch(roomCtrl.updateRoom).delete(roomCtrl.deleteRoom);
 

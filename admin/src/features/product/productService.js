@@ -3,13 +3,11 @@ import axios from 'axios';
 const API_URL = 'api/v1/rooms';
 
 // Get All
-const getAllProducts = async (url) => {
-  if (!url) url = `${API_URL}/`;
-
+const getAllProducts = async () => {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(API_URL + '/');
     if (response.data) {
-      localStorage.setItem('rooms', JSON.stringify(response.data));
+      localStorage.setItem('products', JSON.stringify(response.data));
       return response.data;
     }
   } catch (error) {

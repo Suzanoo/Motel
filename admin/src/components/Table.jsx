@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
-
-import { deleteProduct } from '../features/product/productSlice';
-
+import {
+  deleteProduct,
+  getAllProducts,
+} from '../features/product/productSlice';
 import '../public/css/table.scss';
-
-import React from 'react';
 
 const Table = () => {
   const dispatch = useDispatch();
@@ -16,6 +15,7 @@ const Table = () => {
   const [products, setProducts] = useState(
     JSON.parse(localStorage.getItem('products'))
   );
+
   const [sortType, setSortType] = useState('asc');
   const [sortedBy, setSortedBy] = useState('name');
   const [filteredProducts, setFilteredProducts] = useState(products.data.data);
@@ -63,47 +63,53 @@ const Table = () => {
     navigate(`/update-product/${id}`);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
     const confirmDelete = window.confirm(
       'Are you sure you want to delete this product?'
     );
     if (confirmDelete) {
-      await dispatch(deleteProduct(id));
+      dispatch(deleteProduct(id));
+      navigate('/home');
     }
   };
 
   const handleUpdateTable = () => {
+    dispatch(getAllProducts());
     setProducts(JSON.parse(localStorage.getItem('products')));
+
+    console.log(products);
+
     const searchText = document
       .querySelector('.product-table input')
       .value.toLowerCase();
     const filteredProducts = products.data.data.filter(
       (product) =>
-        product.name.toLowerCase().includes(searchText) ||
-        product.price.toString().includes(searchText) ||
-        product.duration.toString().includes(searchText) ||
-        product.startDates[0].includes(searchText)
+        product.roomName.toLowerCase().includes(searchText) ||
+        product.roomType.toLowerCase().includes(searchText) ||
+        product.price.toString().includes(searchText)
     );
     setFilteredProducts(filteredProducts);
   };
 
   return (
     <div className="product-table">
-      <input type="text" placeholder="Filter..." onChange={handleFilter} />
+      <div className="form-group">
+        <input type="text" placeholder="Filter..." onChange={handleFilter} />
+      </div>
 
       <table className="rwd-table" key={JSON.stringify(products)}>
         <thead>
           <tr>
-            <th onClick={() => handleSort('name')}>Name {sortIcon('name')}</th>
+            <th onClick={() => handleSort('roomName')}>
+              Name {sortIcon('roomName')}
+            </th>
+            <th onClick={() => handleSort('roomType')}>
+              Type {sortIcon('roomType')}
+            </th>
             <th onClick={() => handleSort('price')}>
               Price {sortIcon('price')}
             </th>
-            <th onClick={() => handleSort('duration')}>
-              Duration {sortIcon('duration')}
-            </th>
-            <th onClick={() => handleSort('startDates')}>
-              Date {sortIcon('startDates')}
-            </th>
+
             <th>Detail</th>
             <th>Update</th>
             <th>Delete</th>
@@ -112,10 +118,9 @@ const Table = () => {
         <tbody>
           {filteredProducts.map((product) => (
             <tr key={product._id}>
-              <td>{product.name}</td>
-              <td>{`$${product.price}`}</td>
-              <td>{`${product.duration} days`}</td>
-              <td>{product.startDates[0].split('T')[0]}</td>
+              <td>{product.roomName}</td>
+              <td>{product.roomType}</td>
+              <td>{`${product.price}.THB`}</td>
               <td>
                 <button
                   className="detailBtn"
@@ -143,10 +148,10 @@ const Table = () => {
             </tr>
           ))}
         </tbody>
-        <button className="refreshBtn" onClick={handleUpdateTable}>
-          Refresh Table
-        </button>
       </table>
+      <button className="refreshBtn" onClick={handleUpdateTable}>
+        Refresh Table
+      </button>
     </div>
   );
 };

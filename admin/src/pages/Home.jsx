@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Table from '../components/Table';
+import { getAllProducts } from '../features/product/productSlice';
 
 function Home() {
   const { user } = useSelector((state) => state.auth);
   const { products } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // if (products);
-  }, [products]);
+    dispatch(getAllProducts());
+  }, [dispatch]);
 
   return (
     <>

@@ -13,7 +13,7 @@ const Rooms = ({ rooms }) => {
             ? rooms.rooms.data.data.map((room) => {
                 return <Room room={room} key={room.roomNumber} />;
               })
-            : console.log('No rooms data in local storage')}
+            : ''}
           {}
         </div>
       </div>
