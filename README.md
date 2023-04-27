@@ -8,7 +8,7 @@
 
 ## Intro
 
-- Use Docker to create 4 services of our app: mongodb, server, app, admin
+- Use Docker to create 4 services of app: mongodb, server, app, admin
 - There are things refer to this services name
 
   - Database name in .env file : `mongodb://mongodb:27017/tours`
@@ -38,3 +38,7 @@
 ## Note
 
 1).To create first admin please see information in adminRoute.js
+
+## Demo
+
+https://t.co/ywewzW7XlD
