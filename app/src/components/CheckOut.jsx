@@ -5,7 +5,7 @@ import '../public/css/datepicker.css';
 import { BsCalendar } from 'react-icons/bs';
 
 const CheckOut = ({ value, onChange }) => {
-  const [placeholder, setPlaceholder] = useState('Check in');
+  const [placeholder, setPlaceholder] = useState('Check out');
 
   const handleChange = (date) => {
     onChange(date);

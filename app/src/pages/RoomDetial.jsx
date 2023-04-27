@@ -42,7 +42,7 @@ const RoomDetail = () => {
       <div className="flex flex-col relative justify-center items-center">
         <div className="mb-6">
           <img
-            src={`${require(`../public/assets/img/${room.images}`)}`}
+            src={`${require(`../public/assets/det-img/${room.images}`)}`}
             alt=""
           />
         </div>
