@@ -5,12 +5,15 @@ const Room = ({ room }) => {
   return (
     <div className="bg-white shadow-2xl min-h-[400px] group">
       {/* Image */}
+
       <div className="overflow-hidden">
-        <img
-          className="group-hover:scale-110 transition-all duration-300 w-full"
-          src={`${require(`../public/assets/img/${room.images[0]}`)}`}
-          alt=""
-        />
+        {room.images[0] && (
+          <img
+            className="group-hover:scale-110 transition-all duration-300 w-full"
+            src={`${require(`../public/assets/img/${room.images[0]}`)}`}
+            alt=""
+          />
+        )}
       </div>
       {/* Rating */}
       <div

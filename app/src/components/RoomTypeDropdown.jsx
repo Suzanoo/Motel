@@ -1,17 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Menu } from '@headlessui/react';
 import { BsChevronDown } from 'react-icons/bs';
 
-const options = [
-  { label: 'Gemini', value: 1 },
-  { label: 'Taurus', value: 2 },
-  { label: 'Virgo', value: 3 },
-  { label: 'Leo', value: 4 },
-  { label: 'Pices', value: 5 },
-  { label: 'Capella', value: 6 },
-];
+const RoomType = ({ rooms, value, onChange }) => {
+  const options = rooms.rooms.data.data.map((room, index) => ({
+    label: room.roomName,
+    value: index + 1,
+  }));
 
-const RoomType = ({ value, onChange }) => {
   const [selectedOption, setSelectedOption] = useState(value);
 
   const handleSelect = (option) => {

@@ -35,11 +35,13 @@ const HeroSlider = ({ rooms }) => {
               </div>
 
               <div className="absolute top-0 w-full h-full">
-                <img
-                  className="object-cover w-full h-full"
-                  src={`${require(`../public/assets/img/${item.images[0]}`)}`}
-                  alt=""
-                />
+                {item.images[0] && (
+                  <img
+                    className="object-cover w-full h-full"
+                    src={`${require(`../public/assets/img/${item.images[0]}`)}`}
+                    alt=""
+                  />
+                )}
               </div>
               {/* Overlay */}
               {/* <div className="absolute w-full h-full bg-black/50"></div> */}

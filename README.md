@@ -39,6 +39,15 @@
 
 1).To create first admin please see information in adminRoute.js
 
+2).Things to know about Dockerize, we use container name instead of hostname
+
+- In .env file
+
+  - `DATABASE_LOCAL=mongodb://mongodb:27017/<DB-name>`
+
+- In app/package.json file and admin/package.json file
+- `"proxy": "http://server:5000"`,
+
 ## Demo
 
 https://t.co/ywewzW7XlD

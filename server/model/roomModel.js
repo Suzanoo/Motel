@@ -15,9 +15,10 @@ const roomSchema = new mongoose.Schema(
     roomType: {
       type: 'string',
       required: [true, 'Please define room type'],
+      default: 'deluxe',
       enum: {
-        values: ['sea view', 'delux', 'suit', 'middle age'],
-        message: 'Room type is either: sea view, delux, suite, middle age',
+        values: ['sea view', 'deluxe', 'suit', 'middle age'],
+        message: 'Room type is either: sea view, deluxe, suite, middle age',
       },
     },
     slug: 'string',
@@ -32,14 +33,6 @@ const roomSchema = new mongoose.Schema(
       bath: { type: Boolean, default: true },
       swimming: { type: Boolean, default: true },
       gym: { type: Boolean, default: true },
-    },
-    roomSize: {
-      type: Number,
-      default: 75,
-    },
-    maxPersons: {
-      type: Number,
-      default: 2,
     },
     price: {
       type: Number,
@@ -64,6 +57,9 @@ const roomSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
+  },
+  {
+    timestamps: true,
   }
 );
 

@@ -17,7 +17,7 @@ const port = process.env.PORT || 5000;
 
 const server = app.listen(port, async () => {
   await connectDB(HOST);
-  console.log(`[INFO] Running on port ${port}...`);
+  console.log(`[INFO] Running in ${process.env.NODE_ENV} on port ${port}...`);
 });
 
 // Handle unhandled rejection

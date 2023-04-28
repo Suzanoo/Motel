@@ -11,7 +11,7 @@ import RoomType from './RoomTypeDropdown';
  *  by defining a state in the Booking component that can be updated by passing a callback function
  *  from the Booking component to the RoomType component */
 
-const Booking = () => {
+const Booking = ({ rooms }) => {
   // Define state
   const [roomType, setRoomType] = useState('Gemini');
   const [checkInDate, setCheckInDate] = useState(null);
@@ -36,6 +36,7 @@ const Booking = () => {
           {/* Room type */}
           <div className="flex-1 border-r">
             <RoomType
+              rooms={rooms}
               value={roomType}
               onChange={(value) => setRoomType(value)}
               id="roomType"
