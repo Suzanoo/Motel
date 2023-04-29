@@ -4,11 +4,11 @@ const authCtrl = require('../controller/authController');
 
 const router = express.Router();
 
-// Restrick to user
+// Login required
 router.use(authCtrl.protect);
 
-// User create booking
-router.post('/', bookingCtrl.createBooking);
+// Restrick to user
+router.post('/', authCtrl.restrictTo('user'), bookingCtrl.createBooking);
 
 // Restrick to admin
 router.use(authCtrl.restrictTo('admin'));

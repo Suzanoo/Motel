@@ -7,13 +7,11 @@ const router = express.Router();
 // Public access
 router.route('/').get(roomCtrl.getAllRooms);
 
-// Protect routes(Required login)
+// Required login
 router.use(authCtrl.protect);
 
-// Roles
-router.use(authCtrl.restrictTo('admin'));
-
 // Restricted to admin
+router.use(authCtrl.restrictTo('admin'));
 router.route('/').post(roomCtrl.createRoom);
 router.route('/:id').patch(roomCtrl.updateRoom).delete(roomCtrl.deleteRoom);
 router.route('/:id').get(roomCtrl.getRoom);

@@ -23,7 +23,6 @@ const bookingSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    require: [true, 'Booking must have a price.'],
   },
   deposit: {
     type: Boolean,
@@ -31,14 +30,32 @@ const bookingSchema = new mongoose.Schema({
   },
 });
 
+// Display user name, room name and room type
 bookingSchema.pre(/^find/, function (next) {
-  this.populate('user').populate({
+  this.populate({
+    path: 'user',
+    select: 'name email',
+  }).populate({
     path: 'room',
-    select: 'name',
+    select: 'roomName roomType',
   });
   next();
 });
 
+// When created new booking, define price depend on Room
+bookingSchema.pre('save', async function (next) {
+  const room = await mongoose.model('Rooms').findById(this.room);
+
+  if (!room) {
+    return next(new Error('Room not found'));
+  }
+
+  this.price = room.price;
+
+  next();
+});
+
+// Exporting
 const Booking = mongoose.model('Booking', bookingSchema);
 
 module.exports = Booking;

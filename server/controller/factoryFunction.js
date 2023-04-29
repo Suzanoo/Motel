@@ -15,6 +15,8 @@ exports.deleteOne = (Model) =>
     });
   });
 
+// Bypassed update: pre-save middleware is not getting executed.
+// TODO : Update and use pre-save middleware
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {

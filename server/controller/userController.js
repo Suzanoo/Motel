@@ -39,18 +39,6 @@ exports.createUser = (req, res) => {
   });
 };
 
-// exports.getAllUsers = catchAsync(async (req, res, next) => {
-//   const users = await User.find();
-
-//   res.status(200).json({
-//     status: 'success',
-//     results: users.length,
-//     data: {
-//       users,
-//     },
-//   });
-// });
-
 exports.updateUserData = catchAsync(async (req, res, next) => {
   console.log('updateUserData', req.file);
   console.log('updateUserData', req.body);
