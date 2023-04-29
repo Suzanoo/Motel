@@ -6,6 +6,7 @@ const roomSchema = new mongoose.Schema(
     roomName: {
       type: 'string',
       required: [true, 'Please define room type'],
+      unique: true,
     },
     roomNumber: {
       type: 'string',

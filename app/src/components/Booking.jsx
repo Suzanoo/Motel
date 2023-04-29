@@ -1,19 +1,25 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createNewBooking } from '../features/booking/bookingSlice';
 
 import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
 import Guests from './GuestDropdown';
-import RoomType from './RoomTypeDropdown';
+import RoomName from './RoomNameDropdown';
 
 /** Concept Definition from ChatGPT
- *  To pass the selected room type value from the RoomType component to the Booking component,
- *  you can lift the state up from RoomType to Booking component
+ *  To pass the selected room type value from the roomName component to the Booking component,
+ *  you can lift the state up from roomName to Booking component
  *  by defining a state in the Booking component that can be updated by passing a callback function
- *  from the Booking component to the RoomType component */
+ *  from the Booking component to the roomName component */
 
 const Booking = ({ rooms }) => {
+  // Variable
+  const dispatch = useDispatch();
+
   // Define state
-  const [roomType, setRoomType] = useState('Gemini');
+  const [roomName, setRoomName] = useState('Gemini');
+  const [roomId, setRoomId] = useState('');
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [guest, setGuest] = useState('2 Guest');
@@ -21,25 +27,28 @@ const Booking = ({ rooms }) => {
   const onSubmit = (el) => {
     el.preventDefault();
     const reserve = {
-      roomType,
-      checkInDate,
-      checkOutDate,
+      room: roomId,
+      checkIn: checkInDate,
+      checkOut: checkOutDate,
       guest,
     };
-    console.log(reserve);
+    dispatch(createNewBooking(reserve));
   };
 
   return (
     <>
       <form onSubmit={onSubmit} className="h-[300px] lg:h-[70px]">
         <div className="flex flex-col w-full h-full lg:flex-row">
-          {/* Room type */}
+          {/* Room */}
           <div className="flex-1 border-r">
-            <RoomType
+            <RoomName
               rooms={rooms}
-              value={roomType}
-              onChange={(value) => setRoomType(value)}
-              id="roomType"
+              value={roomName}
+              onChange={(label, id) => {
+                setRoomName(label);
+                setRoomId(id);
+              }}
+              id="roomName"
             />
           </div>
           {/* Check in */}

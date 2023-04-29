@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FaCheck } from 'react-icons/fa';
 
 import IconRender from '../components/IconRender';
@@ -9,7 +9,10 @@ import CheckOut from '../components/CheckOut';
 import Guests from '../components/GuestDropdown';
 import ScrollToTop from '../components/ScrollToTop';
 
+import { createNewBooking } from '../features/booking/bookingSlice';
+
 const RoomDetail = () => {
+  const dispatch = useDispatch();
   const store = useSelector((state) => state.rooms);
   const { slug } = useParams();
 
@@ -26,12 +29,12 @@ const RoomDetail = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const reserve = {
-      roomType: room.roomName,
-      checkInDate,
-      checkOutDate,
+      room,
+      checkIn: checkInDate,
+      checkOut: checkOutDate,
       guest,
     };
-    console.log(reserve);
+    dispatch(createNewBooking(reserve));
   };
 
   return (

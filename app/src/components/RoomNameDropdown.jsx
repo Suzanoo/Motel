@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { Menu } from '@headlessui/react';
 import { BsChevronDown } from 'react-icons/bs';
 
-const RoomType = ({ rooms, value, onChange }) => {
+const RoomName = ({ rooms, value, onChange }) => {
   const options = rooms.rooms.data.data.map((room, index) => ({
     label: room.roomName,
-    value: index + 1,
+    value: room._id,
   }));
 
   const [selectedOption, setSelectedOption] = useState(value);
 
-  const handleSelect = (option) => {
-    setSelectedOption(option);
-    onChange(option);
+  const handleSelect = (item) => {
+    setSelectedOption(item.label);
+    onChange(item.label, item.value);
   };
 
   return (
@@ -29,7 +29,7 @@ const RoomType = ({ rooms, value, onChange }) => {
           return (
             <Menu.Item
               onClick={() => {
-                handleSelect(item.label);
+                handleSelect(item);
               }}
               as="li"
               key={index}
@@ -45,4 +45,4 @@ const RoomType = ({ rooms, value, onChange }) => {
   );
 };
 
-export default RoomType;
+export default RoomName;
