@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createNewBooking } from '../features/booking/bookingSlice';
+import { useNavigate } from 'react-router-dom';
 
 import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
@@ -16,6 +16,7 @@ import RoomName from './RoomNameDropdown';
 const Booking = ({ rooms }) => {
   // Variable
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Define state
   const [roomName, setRoomName] = useState('Gemini');
@@ -27,12 +28,15 @@ const Booking = ({ rooms }) => {
   const onSubmit = (el) => {
     el.preventDefault();
     const reserve = {
+      name: roomName,
       room: roomId,
       checkIn: checkInDate,
       checkOut: checkOutDate,
       guest,
     };
-    dispatch(createNewBooking(reserve));
+
+    //Link to booking page
+    navigate('/booking', { state: reserve });
   };
 
   return (

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getAllRooms } from '../features/rooms/roomSlice';
 import Rooms from '../components/Rooms';
-import Booking from '../components/Booking';
+import Booking from '../components/BookingForm';
 import HeroSlider from '../components/HeroSlider';
 
 const Home = () => {

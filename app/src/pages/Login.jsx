@@ -78,7 +78,7 @@ function Login() {
 
   // 5).
   return (
-    <div className="flex justify-center mx-auto p-6">
+    <div className="flex justify-center mx-auto py-24 bg-pink-200 h-[760px]">
       <div className="flex-col w-2/3 mt-20">
         <form
           className=" bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -112,7 +112,7 @@ function Login() {
               id="password"
               name="password"
               value={password}
-              placeholder="..."
+              placeholder=""
               onChange={onChange}
               required
             />

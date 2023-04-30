@@ -72,7 +72,7 @@ function Register() {
 
   //5).JSX Rendering
   return (
-    <div className="flex justify-center mx-auto p-6">
+    <div className="flex justify-center mx-auto py-24 bg-pink-200 h-[760px]">
       <div className="flex-col w-2/3 mt-20">
         <div className="flex items-center justify-center space-x-2">
           <div
@@ -157,7 +157,7 @@ function Register() {
 
           <button
             type="submit"
-            className="baseline text-white bg-brightRed hover:bg-brightRedSupLight 
+            className="baseline text-white bg-primary hover:scale-110
               font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Register
