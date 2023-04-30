@@ -9,7 +9,7 @@ import CheckOut from '../components/CheckOut';
 import Guests from '../components/GuestDropdown';
 import ScrollToTop from '../components/ScrollToTop';
 
-import { createNewBooking } from '../features/booking/bookingSlice';
+import { addToCart } from '../features/cart/cartSlice';
 
 const RoomDetail = () => {
   const dispatch = useDispatch();
@@ -25,17 +25,22 @@ const RoomDetail = () => {
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [guest, setGuest] = useState('2 Guest');
 
-  // Submit form
-  const onSubmit = (e) => {
-    e.preventDefault();
+  // Add into cart
+  const onSubmit = (el) => {
+    el.preventDefault();
     const reserve = {
-      room,
+      name: room.roomName,
+      room: room._id,
       checkIn: checkInDate,
       checkOut: checkOutDate,
       guest,
     };
-    dispatch(createNewBooking(reserve));
+
+    dispatch(addToCart(reserve));
   };
+
+  // Check if checkInDate and checkOutDate are not null
+  const isDatesNotNull = checkInDate !== null && checkOutDate !== null;
 
   return (
     <section className="bg-orange-200 relative">
@@ -102,7 +107,11 @@ const RoomDetail = () => {
                 </div>
                 <button
                   type="submit"
-                  className="btn btn-lg btn-primary w-full py-2"
+                  className={
+                    !isDatesNotNull
+                      ? 'btn btn-lg btn-primary w-full py-2 pointer-events-none opacity-50'
+                      : 'btn btn-lg btn-primary fw-full py-2'
+                  }
                 >
                   Book now form {room.price} THB
                 </button>

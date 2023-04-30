@@ -1,16 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { FaCartArrowDown } from 'react-icons/fa';
+import { logout, reset } from '../features/auth/authSlice';
 
 import logo from '../public/assets/img/logo.png';
 
 const Header = () => {
-  const [header, setHeader] = useState(false);
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
+  const [header, setHeader] = useState(false);
   useEffect(() => {
     window.addEventListener('scroll', () => {
       window.scrollY > 50 ? setHeader(true) : setHeader(false);
     });
   });
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+  };
 
   return (
     <header
@@ -27,8 +37,9 @@ const Header = () => {
         {/* Nav */}
         <nav
           className={`${
-            header ? 'text-gemini' : 'text-white'
-          } flex gap-x-2 lg:gap-x-8 font-tertiary tracking-[3px] text-[15px] items-center uppercase `}
+            header ? 'text-primary' : 'text-white'
+          } hidden lg:flex gap-x-2 lg:gap-x-8 font-tertiary tracking-[3px] text-[15px]
+           items-center uppercase `}
         >
           <a href="/" className="hover:text-orange-400 transition">
             Home
@@ -46,6 +57,22 @@ const Header = () => {
             Contact
           </a>
         </nav>
+
+        {/* cart, login */}
+        <div
+          className={`${
+            header ? 'text-primary' : 'text-white'
+          } flex gap-x-2 lg:gap-x-8 font-tertiary tracking-[3px] text-[15px] items-center uppercase `}
+        >
+          <Link to="/booking">
+            <FaCartArrowDown />
+          </Link>
+          {auth && auth.user === null ? (
+            <Link to="/login">login</Link>
+          ) : (
+            <Link onClick={handleLogout}>logout</Link>
+          )}
+        </div>
       </div>
     </header>
   );

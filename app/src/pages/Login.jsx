@@ -34,7 +34,7 @@ function Login() {
   // 4).
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      toast.error('Wrong email or password');
     }
 
     if (isSuccess) {

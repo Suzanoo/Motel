@@ -815,6 +815,10 @@ input::placeholder {
   min-height: 400px;
 }
 
+.min-h-\[760px\] {
+  min-height: 760px;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1067,6 +1071,11 @@ input::placeholder {
   padding-right: 2rem;
 }
 
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -1212,6 +1221,11 @@ input::placeholder {
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.text-primary {
+  --tw-text-opacity: 1;
+  color: rgb(10 10 10 / var(--tw-text-opacity));
 }
 
 .text-white {
@@ -1376,6 +1390,10 @@ input::placeholder {
 
   .lg\:mr-4 {
     margin-right: 1rem;
+  }
+
+  .lg\:flex {
+    display: flex;
   }
 
   .lg\:h-\[550px\] {

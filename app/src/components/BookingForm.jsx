@@ -1,22 +1,18 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+import { fetchCart, addToCart } from '../features/cart/cartSlice';
 
 import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
 import Guests from './GuestDropdown';
 import RoomName from './RoomNameDropdown';
 
-/** Concept Definition from ChatGPT
- *  To pass the selected room type value from the roomName component to the Booking component,
- *  you can lift the state up from roomName to Booking component
- *  by defining a state in the Booking component that can be updated by passing a callback function
- *  from the Booking component to the roomName component */
-
 const Booking = ({ rooms }) => {
   // Variable
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Define state
   const [roomName, setRoomName] = useState('Gemini');
@@ -25,6 +21,12 @@ const Booking = ({ rooms }) => {
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [guest, setGuest] = useState('2 Guest');
 
+  // First fetch
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
+  // Add to cart
   const onSubmit = (el) => {
     el.preventDefault();
     const reserve = {
@@ -35,15 +37,17 @@ const Booking = ({ rooms }) => {
       guest,
     };
 
-    //Link to booking page
-    navigate('/booking', { state: reserve });
+    dispatch(addToCart(reserve));
   };
+
+  // Check if checkInDate and checkOutDate are not null
+  const isDatesNotNull = checkInDate !== null && checkOutDate !== null;
 
   return (
     <>
       <form onSubmit={onSubmit} className="h-[300px] lg:h-[70px]">
         <div className="flex flex-col w-full h-full lg:flex-row">
-          {/* Room */}
+          {/* Room Dropdown */}
           <div className="flex-1 border-r">
             <RoomName
               rooms={rooms}
@@ -82,9 +86,13 @@ const Booking = ({ rooms }) => {
 
           <button
             type="submit"
-            className="btn btn-lg btn-primary flex-1 text-white h-full"
+            className={
+              !isDatesNotNull
+                ? 'btn btn-lg btn-primary flex-1 text-white h-full pointer-events-none opacity-50'
+                : 'btn btn-lg btn-primary flex-1 text-white h-full'
+            }
           >
-            Booking
+            Add to cart
           </button>
         </div>
       </form>

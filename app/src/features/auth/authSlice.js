@@ -26,7 +26,7 @@ const initialState = {
 // Create async action-reducer: register
 export const register = createAsyncThunk(
   // async action type
-  'auth/register',
+  'user/register',
   // function return payload
   async (user, thunkAPI) => {
     try {
@@ -44,7 +44,7 @@ export const register = createAsyncThunk(
 // Create async action-reducer: login
 export const login = createAsyncThunk(
   // async action type
-  'auth/login',
+  'user/login',
   // function return payload
   async (user, thunkAPI) => {
     try {
@@ -64,7 +64,7 @@ export const login = createAsyncThunk(
 // Create async action-reducer: login
 export const getUser = createAsyncThunk(
   // async action type
-  'auth/getUser',
+  'user/getUser',
   // function return payload
   async (id, thunkAPI) => {
     try {
@@ -82,19 +82,14 @@ export const getUser = createAsyncThunk(
 );
 
 // Create async action-reducer: logout
-export const logout = createAsyncThunk(
-  // async action type
-  'auth/logout',
-  // function return payload
-  async () => {
-    await authService.logout();
-  }
-);
+export const logout = createAsyncThunk('user/logout', async () => {
+  await authService.logout();
+});
 
 // Create async action-reducer: forgot password action
 export const forgotPwd = createAsyncThunk(
   // async action type
-  'auth/forgotPwd',
+  'user/forgotPwd',
   // function return payload
   async (user, thunkAPI) => {
     try {
@@ -114,7 +109,7 @@ export const forgotPwd = createAsyncThunk(
 // Create async action-reducer: reset password action
 export const resetPwd = createAsyncThunk(
   // async action type
-  'auth/resetPwd',
+  'user/resetPwd',
   // function return payload
   async (data, thunkAPI) => {
     try {
@@ -133,7 +128,7 @@ export const resetPwd = createAsyncThunk(
 
 //
 export const updateProfilePicture = createAsyncThunk(
-  'auth/updateProfilePicture',
+  'user/updateProfilePicture',
   async (formData, thunkAPI) => {
     try {
       return await authService.updateProfilePicture(formData);
@@ -151,7 +146,7 @@ export const updateProfilePicture = createAsyncThunk(
 
 // Create slice
 export const authSlice = createSlice({
-  name: 'auth',
+  name: 'user',
   initialState,
   reducers: {
     reset: (state) => {
@@ -248,7 +243,8 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
-        state.plan = null;
+        state.booking = null;
+        state.cart = null;
       });
   },
 });
