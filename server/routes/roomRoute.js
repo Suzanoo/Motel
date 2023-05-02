@@ -13,7 +13,13 @@ router.use(authCtrl.protect);
 // Restricted to admin
 router.use(authCtrl.restrictTo('admin'));
 router.route('/').post(roomCtrl.createRoom);
-router.route('/:id').patch(roomCtrl.updateRoom).delete(roomCtrl.deleteRoom);
+router
+  .route('/:id')
+  .patch(roomCtrl.bypassUpdateRoom) // Bypass update
+  .delete(roomCtrl.deleteRoom);
+
+router.route('/update/:id').patch(roomCtrl.updateRoom); // Update save() method
+
 router.route('/:id').get(roomCtrl.getRoom);
 router.route('/:slug').get(roomCtrl.getRoomBySlug);
 

@@ -4,13 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FaCartArrowDown } from 'react-icons/fa';
 import { logout, reset } from '../features/auth/authSlice';
 
-import logo from '../public/assets/img/logo.png';
+import logo from '../public/assets/logo.png';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-
+  const { user } = useSelector((state) => state.auth);
   const [header, setHeader] = useState(false);
+
+  // Listning header
   useEffect(() => {
     window.addEventListener('scroll', () => {
       window.scrollY > 50 ? setHeader(true) : setHeader(false);
@@ -67,7 +68,8 @@ const Header = () => {
           <Link to="/booking">
             <FaCartArrowDown />
           </Link>
-          {auth && auth.user === null ? (
+
+          {!user ? (
             <Link to="/login">login</Link>
           ) : (
             <Link onClick={handleLogout}>logout</Link>

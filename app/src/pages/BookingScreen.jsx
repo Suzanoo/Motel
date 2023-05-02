@@ -1,8 +1,10 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+
 import BookingStep from '../components/BookingStep';
-import { createNewBooking } from '../features/booking/bookingSlice';
+import { createNewBooking, reset } from '../features/booking/bookingSlice';
 
 const date = (d) => {
   const dateObj = new Date(d);
@@ -15,16 +17,47 @@ const date = (d) => {
 };
 
 const BookingScreen = () => {
+  // Variable
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // State init
   const { user } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
-
-  const dispatch = useDispatch();
+  const { booking, isError, isSuccess, message } = useSelector(
+    (state) => state.booking
+  );
   const [selectedOption, setSelectedOption] = useState('');
 
+  // Listen for booking
+  useEffect(() => {
+    if (isError) {
+      toast.error('Something went wrong');
+    }
+
+    if (isSuccess) {
+      navigate('/');
+    }
+
+    dispatch(reset());
+  }, [booking, isError, isSuccess, message, navigate, dispatch]);
+
+  // Listen for radio buttons
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
+  // Store previous location before navigating to login page
+  const handleLogin = () => {
+    window.localStorage.setItem('prevLocation', '/booking');
+    navigate('/login');
+  };
+
+  const handleEdit = () => {
+    alert('Next implementation');
+  };
+
+  // Booking
   const onSubmit = async (e) => {
     e.preventDefault();
     for (const item of cart) {
@@ -35,59 +68,63 @@ const BookingScreen = () => {
   return (
     <>
       <div className="bg-pink-200 w-full min-h-[760px]">
-        <div className="flex flex-col justify-center items-center mb-8 py-24">
+        <div className="flex flex-col justify-center items-center py-24">
           {/* Check user status */}
-          <div className="flex mx-auto justify-center ">
+          <div className="flex mx-auto justify-center py-4">
             {user ? (
               // if user: disable login button, enable checkout button
               <BookingStep step1={false} step2={true} />
             ) : (
               // if no: enable login button, disable checkout button
-              <BookingStep step1={true} step2={false} />
+              <BookingStep
+                step1={true}
+                step2={false}
+                handleLogin={handleLogin}
+              />
             )}
           </div>
 
-          <form onSubmit={onSubmit} className="flex flex-col">
+          <form className="flex flex-col">
             {/* Display user reserve */}
-            <ul>
-              <li className="py-2">
-                <span className="font-bold text-[24px]">Your Reserve</span>
-              </li>
+            <div>
+              <span className="font-bold text-[20px]">Your Reserve</span>
               {cart.map((item, index) => {
                 return (
                   <ul>
                     <li className="py-2">
-                      <span className="font-bold text-[24px]">
+                      <span className="font-bold text-[18px]">
                         Room:{index + 1}
                       </span>
                     </li>
                     <li>
-                      <span className="font-bold">Room Type:</span> {item.name}
+                      <span className="font-semibold">Room Type:</span>{' '}
+                      {item.name}
                     </li>
                     <li>
-                      <span className="font-bold">Check In:</span>{' '}
+                      <span className="font-semibold">Check In:</span>{' '}
                       {date(item.checkIn)}
                     </li>
                     <li>
-                      <span className="font-bold">Check Out:</span>{' '}
+                      <span className="font-semibold">Check Out:</span>{' '}
                       {date(item.checkOut)}
                     </li>
                     <li>
-                      <span className="font-bold">Guest:</span> {item.guest}
+                      <span className="font-semibold">Guest:</span> {item.guest}
                     </li>
                   </ul>
                 );
               })}
-            </ul>
+            </div>
 
             {/* Payment method */}
-            <span className="font-bold text-[24px] mt-4">
+            <span className="font-bold text-[20px] mt-4">
               Select payment method
             </span>
             <div className="mt-4">
               <label className="mr-2">
                 <input
                   type="radio"
+                  name="paypal"
                   value="paypal"
                   checked={selectedOption === 'paypal'}
                   onChange={handleOptionChange}
@@ -98,6 +135,7 @@ const BookingScreen = () => {
               <label>
                 <input
                   type="radio"
+                  name="card"
                   value="card"
                   checked={selectedOption === 'card'}
                   onChange={handleOptionChange}
@@ -106,22 +144,31 @@ const BookingScreen = () => {
               </label>
             </div>
 
-            {/* Checkout  */}
-            <button
-              className={
-                user
-                  ? 'rounded mt-6 bg-primary text-white px-4 py-2 hover:bg-gray-600'
-                  : 'rounded mt-6 bg-primary text-white px-4 py-2 disabled pointer-events-none opacity-50'
-              }
-            >
-              Checkout Deposit 25%
-            </button>
+            {/* Edit && Checkout  */}
+            <div className="flex gap-x-4">
+              <button
+                onClick={handleEdit}
+                className="rounded mt-6 bg-blue-400 text-white px-4 py-2 hover:bg-blue-200"
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={onSubmit}
+                className={
+                  user && cart.length > 0
+                    ? 'rounded mt-6 bg-blue-400 text-white px-4 py-2 hover:bg-blue-200'
+                    : 'rounded mt-6 bg-blue-400 text-white px-4 py-2 disabled pointer-events-none opacity-50'
+                }
+              >
+                Deposit 25%
+              </button>
+            </div>
           </form>
-          <div className="flex justify-center">
-            <Link to="/login" className="text-blue-500 px-2">
-              Login
-            </Link>
-            first. Don't have account?{' '}
+
+          {/* Register  */}
+          <div className="flex justify-center py-4">
+            Don't have account?{' '}
             <Link to="/register" className="text-blue-500 px-2">
               Signup
             </Link>

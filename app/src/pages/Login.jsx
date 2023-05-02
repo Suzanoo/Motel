@@ -6,11 +6,8 @@ import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
 
 /*
-1).Define initial blank form
-2).Configure form fields and hooks required
-3).Access auth state in store and parse into variables
-4).Events handlers
-5).JSX Rendering
+ store the previous location before navigating to the login page 
+ and then redirect the user back to that location after a successful login
 */
 
 function Login() {
@@ -31,14 +28,25 @@ function Login() {
     (state) => state.auth
   );
 
+  const [prevLocation, setPrevLocation] = useState(null);
+
   // 4).
+  // Get previous location before navigating to login page
+  useEffect(() => {
+    setPrevLocation(window.localStorage.getItem('prevLocation'));
+  }, []);
+
+  // 5).
   useEffect(() => {
     if (isError) {
       toast.error('Wrong email or password');
     }
 
     if (isSuccess) {
-      navigate('/'); // Redirect to Home page
+      // Redirect to previous location or home page
+      const location = prevLocation ? prevLocation : '/';
+      window.localStorage.removeItem('prevLocation');
+      navigate(location);
     }
 
     dispatch(reset());

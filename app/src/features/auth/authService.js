@@ -49,10 +49,13 @@ const resetPwd = async (data) => {
   return response;
 };
 
-// Update Profile Picture
+// @desc    Update user data (bypass)
+// @route   PATCH /users/update-user-data
+// @access  User
+// @fields allow to update: name, email, profile picture
 const updateProfilePicture = async (formData) => {
   const response = await axios
-    .patch(API_URL + '/updateUserData', formData, {
+    .patch(API_URL + '/update-user-data', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
     .then((response) => {

@@ -9,10 +9,8 @@ exports.resizeProfilePicture = async (req, res, next) => {
   await sharp(req.file.buffer)
     .resize(118, 118)
     .toFormat('png')
-    .toFile(`frontend/src/public/img/users-profile/${req.file.filename}`);
+    .toFile(`app/src/public/assets/user-profile/${req.file.filename}`);
 
   console.log('Resize image complete');
   next();
 };
-
-exports.resizeUserImage = () => {};

@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
 
-/*
-1.Fetch user from localStorage & cast to JSON object
-2.Initialize state
-3.Create async action-reducer:
-  -register
-  -login
-  -logout
-4.Create slice
-*/
+/**
+ * Register
+ * Login
+ * Logout
+ * Forgot password
+ * Reset password
+ * User profile
+ * Update profile picture
+ */
 
 // Fetch user from localStorage & cast to JSON object
 const user = JSON.parse(localStorage.getItem('user'));
@@ -23,7 +23,7 @@ const initialState = {
   message: '',
 };
 
-// Create async action-reducer: register
+// Register
 export const register = createAsyncThunk(
   // async action type
   'user/register',
@@ -41,7 +41,7 @@ export const register = createAsyncThunk(
   }
 );
 
-// Create async action-reducer: login
+// Login
 export const login = createAsyncThunk(
   // async action type
   'user/login',
@@ -61,32 +61,12 @@ export const login = createAsyncThunk(
   }
 );
 
-// Create async action-reducer: login
-export const getUser = createAsyncThunk(
-  // async action type
-  'user/getUser',
-  // function return payload
-  async (id, thunkAPI) => {
-    try {
-      return await authService.getUser(id);
-    } catch (err) {
-      const message =
-        err.message ||
-        (err.response && err.response.data && err.response.data.message) ||
-        err.toString();
-      // console.log(err.response.data);
-      // alert(err.response.data.message);
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Create async action-reducer: logout
+// Logout
 export const logout = createAsyncThunk('user/logout', async () => {
   await authService.logout();
 });
 
-// Create async action-reducer: forgot password action
+// Forgot password
 export const forgotPwd = createAsyncThunk(
   // async action type
   'user/forgotPwd',
@@ -106,7 +86,7 @@ export const forgotPwd = createAsyncThunk(
   }
 );
 
-// Create async action-reducer: reset password action
+// Reset password
 export const resetPwd = createAsyncThunk(
   // async action type
   'user/resetPwd',
@@ -126,7 +106,27 @@ export const resetPwd = createAsyncThunk(
   }
 );
 
-//
+// User profile
+export const getUser = createAsyncThunk(
+  // async action type
+  'user/getUser',
+  // function return payload
+  async (id, thunkAPI) => {
+    try {
+      return await authService.getUser(id);
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      // console.log(err.response.data);
+      // alert(err.response.data.message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Update profile picture
 export const updateProfilePicture = createAsyncThunk(
   'user/updateProfilePicture',
   async (formData, thunkAPI) => {

@@ -13,6 +13,7 @@ const createNewBooking = async (bookingData) => {
     }
   );
   if (data) localStorage.setItem('booking', JSON.stringify(data));
+  console.log(data);
   return data;
 };
 

@@ -10,12 +10,9 @@ const Home = () => {
   const rooms = useSelector((state) => state.rooms);
   const dispatch = useDispatch();
 
-  // if (rooms.rooms === null) dispatch(getAllRooms());
-
-  // Fetch rooms data on component mount
+  // First fetch data on component mount
   useEffect(() => {
     dispatch(getAllRooms());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (

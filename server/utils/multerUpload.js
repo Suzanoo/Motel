@@ -15,7 +15,7 @@ Note: response from multer
 }
  */
 
-// store local
+// 1). store local
 // const multerStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
 //     cb(null, 'backend/public/img/users'); // TODO why use this path
@@ -26,12 +26,12 @@ Note: response from multer
 //   },
 // });
 
-// store in buffer then use sharp read buffer too resize later
+// 2). store in buffer then use sharp read buffer too resize later
 const multerStorage = multer.memoryStorage();
 
-// filter image upload type
+// 3). filter file type of upload file
 const multerFilter = (req, file, cb) => {
-  console.log('upladProfilePictur()', file);
+  console.log('Upload file', file);
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
   } else {
@@ -39,12 +39,13 @@ const multerFilter = (req, file, cb) => {
   }
 };
 
-//
-const uploadProfilePicture = multer({
+// 4). User profile image
+const uploadImage = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
 });
 
-// const uploadProfilePicture = multer({ dest: 'backend/public/img/users' }); // absolute path
+// in case store locally
+// const uploadImage = multer({ dest: 'backend/public/img/users' }); // absolute path
 
-module.exports = uploadProfilePicture;
+module.exports = uploadImage;

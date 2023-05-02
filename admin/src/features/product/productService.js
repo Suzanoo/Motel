@@ -27,7 +27,7 @@ const createNewProduct = async (productData) => {
   }
 };
 
-// Update product
+// Update product (Bypass)
 const updateProduct = async (id, productData) => {
   try {
     const response = await axios.patch(

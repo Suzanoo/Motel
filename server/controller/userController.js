@@ -3,8 +3,8 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const CRUD = require('./factoryFunction');
 
-// const resizeImg = require('../utils/resizeImg');
-// const upload = require('../utils/multerUpload');
+const resizeImg = require('../utils/resizeImg');
+const uploadImg = require('../utils/multerUpload');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -19,8 +19,8 @@ const filterObj = (obj, ...allowedFields) => {
 // -----------------------------------
 // ##
 // -----------------------------------
-// exports.uploadProfilePicture = upload.single('photo'); // same name in schema and input from ProfilePicture.jsx
-// exports.resizeProfilePicture = resizeImg.resizeProfilePicture;
+exports.uploadProfilePicture = uploadImg.single('photo'); // same name in schema and input from ProfilePicture.jsx
+exports.resizeProfilePicture = resizeImg.resizeProfilePicture;
 
 exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
@@ -39,9 +39,13 @@ exports.createUser = (req, res) => {
   });
 };
 
+// @desc    Update user data (bypass)
+// @route   PATCH /api/v1/users/update-user-data
+// @access  User
+// @fields allow to update: name, email, profile picture
 exports.updateUserData = catchAsync(async (req, res, next) => {
-  console.log('updateUserData', req.file);
-  console.log('updateUserData', req.body);
+  console.log('Update user data', req.file);
+  console.log('Update user data', req.body);
 
   // 1) Create error if user POSTs password data
   if (req.body.password || req.body.passwordConfirm) {

@@ -14,11 +14,11 @@ router.patch('/reset-pwd/:token', authCtrl.resetPassword);
 router.use(authCtrl.protect);
 
 router.get('/personal', userCtrl.getMe, userCtrl.getUser);
-// router.patch('/updateMyPassword', authCtrl.updatePassword);
+router.patch('/update-pwd', authCtrl.updatePassword);
 router.patch(
-  '/updateUserData',
-  //   userCtrl.uploadProfilePicture,
-  //   userCtrl.resizeProfilePicture,
+  '/update-user-data',
+  userCtrl.uploadProfilePicture,
+  userCtrl.resizeProfilePicture,
   userCtrl.updateUserData
 );
 router.delete('/deleteCurrentUser', userCtrl.deleteCurrentUser);

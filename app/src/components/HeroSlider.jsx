@@ -38,7 +38,7 @@ const HeroSlider = ({ rooms }) => {
                 {item.images[0] && (
                   <img
                     className="object-cover w-full h-full"
-                    src={`${require(`../public/assets/img/${item.images[0]}`)}`}
+                    src={`${require(`../public/assets/slide-img/${item.images[0]}`)}`}
                     alt=""
                   />
                 )}

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-import { fetchCart, addToCart } from '../features/cart/cartSlice';
+import { fetchCart, addToCart, reset } from '../features/cart/cartSlice';
 
 import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
@@ -11,8 +12,8 @@ import RoomName from './RoomNameDropdown';
 
 const Booking = ({ rooms }) => {
   // Variable
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Define state
   const [roomName, setRoomName] = useState('Gemini');
@@ -20,11 +21,27 @@ const Booking = ({ rooms }) => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [guest, setGuest] = useState('2 Guest');
+  const { cart, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.booking
+  );
 
-  // First fetch
+  // First fetch data on component mount
   useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
+
+  // Listening cart
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess) {
+      navigate('/');
+    }
+
+    dispatch(reset());
+  }, [cart, isError, isSuccess, message, navigate, dispatch]);
 
   // Add to cart
   const onSubmit = (el) => {
