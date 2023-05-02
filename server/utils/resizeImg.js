@@ -10,7 +10,17 @@ exports.resizeProfilePicture = async (req, res, next) => {
     .resize(118, 118)
     .toFormat('png')
     .toFile(`app/src/public/assets/user-profile/${req.file.filename}`);
+  next();
+};
 
-  console.log('Resize image complete');
+exports.resizeProductPicture = async (req, res, next) => {
+  if (!req.file) return next();
+
+  req.file.filename = `room-${req.params.id}-${Date.now()}.png`;
+
+  await sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('png')
+    .toFile(`app/src/public/assets/detail-img/${req.file.filename}`);
   next();
 };

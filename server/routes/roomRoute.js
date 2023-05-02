@@ -15,10 +15,10 @@ router.use(authCtrl.restrictTo('admin'));
 router.route('/').post(roomCtrl.createRoom);
 router
   .route('/:id')
-  .patch(roomCtrl.bypassUpdateRoom) // Bypass update
+  .patch(roomCtrl.uploadRoomImg, roomCtrl.resizeRoomImg, roomCtrl.updateRoom)
   .delete(roomCtrl.deleteRoom);
 
-router.route('/update/:id').patch(roomCtrl.updateRoom); // Update save() method
+router.route('/update/:id').patch(roomCtrl.updateRoomAllFields); // Update save() method
 
 router.route('/:id').get(roomCtrl.getRoom);
 router.route('/:slug').get(roomCtrl.getRoomBySlug);
