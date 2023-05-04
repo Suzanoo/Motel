@@ -9,7 +9,7 @@ const Room = ({ room }) => {
         {room.images[0] && (
           <img
             className="group-hover:scale-110 transition-all duration-300 w-full"
-            src={`${require(`../public/assets/slide-img/${room.images[0]}`)}`}
+            src={`${require(`../public/assets/detail-img/${room.images[0]}`)}`}
             alt=""
           />
         )}

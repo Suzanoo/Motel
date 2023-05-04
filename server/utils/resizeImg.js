@@ -19,7 +19,7 @@ exports.resizeProductPicture = async (req, res, next) => {
   req.file.filename = `room-${req.params.id}-${Date.now()}.png`;
 
   await sharp(req.file.buffer)
-    .resize(500, 500)
+    .resize(1500, 1000)
     .toFormat('png')
     .toFile(`app/src/public/assets/detail-img/${req.file.filename}`);
   next();

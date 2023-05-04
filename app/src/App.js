@@ -11,6 +11,10 @@ import BookingScreen from './pages/BookingScreen';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
+import Admin from './pages/Admin';
+import CreateNewRoom from './pages/CreateNewRoom';
+import UpdateRoom from './pages/UpdateRoom';
+
 function App() {
   return (
     <>
@@ -23,6 +27,11 @@ function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          {/** Restric to Admin*/}
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/new-room" element={<CreateNewRoom />} />
+          <Route path="/update-room/:id" element={<UpdateRoom />} />
         </Routes>
         <Footer />
       </Router>

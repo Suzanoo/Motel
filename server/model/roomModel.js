@@ -19,7 +19,7 @@ const roomSchema = new mongoose.Schema(
       default: 'deluxe',
       enum: {
         values: ['sea view', 'deluxe', 'suit', 'middle age'],
-        message: 'Room type is either: sea view, deluxe, suite, middle age',
+        message: 'Room type is either: sea view, deluxe, suit, middle age',
       },
     },
     slug: 'string',
@@ -53,7 +53,10 @@ const roomSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    images: [String],
+    images: {
+      type: [String],
+      default: 'default-img.png',
+    },
   },
   {
     toJSON: { virtuals: true },

@@ -51,13 +51,19 @@ exports.getRoomBySlug = CRUD.getOneBySlug(Room);
 // exports.updateRoom = CRUD.updateOne(Room);
 
 exports.updateRoom = catchAsync(async (req, res, next) => {
-  console.log('Update room', req.file);
+  // 1). Allow fields to changed
+  const filteredBody = filterObj(
+    req.body,
+    'roomName',
+    'price',
+    'priceDiscount',
+    'images'
+  );
 
-  // 1). Allow changed only room name
-  const filteredBody = filterObj(req.body, 'roomName');
+  // console.log(req.file);
 
   // 2). Allow if there are images in request body
-  if (req.body.images) filteredBody.photo = req.body.images; // allow in POSTMAN (test dev)
+  if (req.body.images) filteredBody.images = req.body.images; // allow in POSTMAN (test dev)
   if (req.file) filteredBody.images = req.file.filename; // allow from file upload
 
   // 3) Update room document

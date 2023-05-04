@@ -49,10 +49,12 @@ const RoomDetail = () => {
       {/* banner */}
       <div className="flex flex-col relative justify-center items-center">
         <div className="mb-6">
-          <img
-            src={`${require(`../public/assets/detail-img/${room.images}`)}`}
-            alt=""
-          />
+          {room.images[0] && (
+            <img
+              src={`${require(`../public/assets/detail-img/${room.images[0]}`)}`}
+              alt=""
+            />
+          )}
         </div>
         {/* title */}
         <div className="relative z-20 text-accent text-3xl font-primary uppercase">

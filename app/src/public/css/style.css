@@ -775,6 +775,10 @@ input::placeholder {
   display: flex;
 }
 
+.table {
+  display: table;
+}
+
 .grid {
   display: grid;
 }
@@ -833,6 +837,10 @@ input::placeholder {
 
 .w-full {
   width: 100%;
+}
+
+.min-w-\[640px\] {
+  min-width: 640px;
 }
 
 .max-w-\[300px\] {
@@ -1041,6 +1049,10 @@ input::placeholder {
 
 .object-cover {
   object-fit: cover;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .p-4 {
@@ -1311,11 +1323,6 @@ input::placeholder {
 .hover\:bg-blue-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(191 219 254 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-gray-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
 }
 
 .hover\:text-gray-600:hover {

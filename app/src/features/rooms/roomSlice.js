@@ -8,7 +8,7 @@ import roomService from './roomService';
 4.Create slice
 */
 
-// Fetch tours from localStorage & cast to JSON object
+// Fetch rooms from localStorage & cast to JSON object
 const rooms = JSON.parse(localStorage.getItem('rooms'));
 
 // Initialize state
@@ -23,11 +23,65 @@ const initialState = {
 // Create async action-reducer
 export const getAllRooms = createAsyncThunk(
   // Action type
-  'rooms/get_all_rooms',
+  'rooms/get-all_rooms',
   // Payload
   async (thunkAPI) => {
     try {
       return await roomService.getAll();
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const createNewRoom = createAsyncThunk(
+  // Action type
+  'rooms/create-new-room',
+  // Payload:
+  async (data, thunkAPI) => {
+    // console.log(productData);
+    try {
+      return await roomService.createNewRoom(data);
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const updateRoom = createAsyncThunk(
+  // Action type
+  'rooms/update-room',
+  //  * createAsyncThunk expects a single argument creator function
+  //  * that takes a single argument as payload
+  async ({ id, formData }, thunkAPI) => {
+    try {
+      return await roomService.updateRoom(id, formData);
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const deleteRoom = createAsyncThunk(
+  // Action type
+  'rooms/delete-room',
+  //  * createAsyncThunk expects a single argument creator function
+  //  * that takes a single argument as payload
+  async (id, thunkAPI) => {
+    try {
+      await roomService.deleteRoom(id);
     } catch (err) {
       const message =
         err.message ||
@@ -53,6 +107,7 @@ export const roomSlice = createSlice({
   // Manage payload life cycle
   extraReducers: (builder) => {
     builder
+      // Get all rooms
       .addCase(getAllRooms.pending, (state) => {
         state.isLoading = true;
       })
@@ -66,6 +121,34 @@ export const roomSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.rooms = null;
+      })
+      // Create a new room
+      .addCase(createNewRoom.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createNewRoom.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.rooms = action.payload;
+      })
+      .addCase(createNewRoom.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      //Delete a room
+      .addCase(deleteRoom.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteRoom.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.rooms = action.payload;
+      })
+      .addCase(deleteRoom.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });

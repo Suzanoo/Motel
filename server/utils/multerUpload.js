@@ -31,7 +31,7 @@ const multerStorage = multer.memoryStorage();
 
 // 3). filter file type of upload file
 const multerFilter = (req, file, cb) => {
-  console.log('Upload file', file);
+  // console.log('Upload file', file);
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
   } else {
