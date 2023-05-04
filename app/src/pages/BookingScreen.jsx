@@ -27,7 +27,7 @@ const BookingScreen = () => {
   const { booking, isError, isSuccess, message } = useSelector(
     (state) => state.booking
   );
-  const [selectedOption, setSelectedOption] = useState('');
+  const [payment, setPayment] = useState('paypal');
 
   // Listen for booking
   useEffect(() => {
@@ -43,8 +43,8 @@ const BookingScreen = () => {
   }, [booking, isError, isSuccess, message, navigate, dispatch]);
 
   // Listen for radio buttons
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+  const handlePayment = (e) => {
+    setPayment(e.target.value);
   };
 
   // Store previous location before navigating to login page
@@ -60,7 +60,15 @@ const BookingScreen = () => {
   // Booking
   const onSubmit = async (e) => {
     e.preventDefault();
-    for (const item of cart) {
+
+    const carts = {
+      cart: cart,
+      payment: payment,
+    };
+
+    alert('Next step: Checkout method');
+
+    for (const item of carts.cart) {
       await dispatch(createNewBooking(item));
     }
   };
@@ -90,7 +98,7 @@ const BookingScreen = () => {
               <span className="font-bold text-[20px]">Your Reserve</span>
               {cart.map((item, index) => {
                 return (
-                  <ul>
+                  <ul key={index}>
                     <li className="py-2">
                       <span className="font-bold text-[18px]">
                         Room:{index + 1}
@@ -126,8 +134,8 @@ const BookingScreen = () => {
                   type="radio"
                   name="paypal"
                   value="paypal"
-                  checked={selectedOption === 'paypal'}
-                  onChange={handleOptionChange}
+                  checked={payment === 'paypal'}
+                  onChange={handlePayment}
                 />
                 <span className="ml-2">Paypal</span>
               </label>
@@ -137,8 +145,8 @@ const BookingScreen = () => {
                   type="radio"
                   name="card"
                   value="card"
-                  checked={selectedOption === 'card'}
-                  onChange={handleOptionChange}
+                  checked={payment === 'card'}
+                  onChange={handlePayment}
                 />
                 <span className="ml-2">Credit Card</span>
               </label>

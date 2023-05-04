@@ -72,7 +72,8 @@ function UpdateRoom() {
     try {
       dispatch(updateRoom({ id, formData }))
         .then(dispatch(getAllRooms()))
-        .then(dispatch(reset()));
+        .then(dispatch(reset()))
+        .then(navigate('/admin'));
     } catch (e) {}
   };
 
