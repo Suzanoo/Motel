@@ -4,7 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import BookingStep from '../components/BookingStep';
-import { createNewBooking, reset } from '../features/booking/bookingSlice';
+import {
+  createNewBooking,
+  reset,
+  resetBooking,
+} from '../features/booking/bookingSlice';
+
+import { resetCart } from '../features/cart/cartSlice';
 
 const date = (d) => {
   const dateObj = new Date(d);
@@ -47,14 +53,14 @@ const BookingScreen = () => {
     setPayment(e.target.value);
   };
 
-  // Store previous location before navigating to login page
+  // Store current location before navigating to login page
   const handleLogin = () => {
     window.localStorage.setItem('prevLocation', '/booking');
     navigate('/login');
   };
 
   const handleEdit = () => {
-    alert('Next implementation');
+    window.alert('Next implementation');
   };
 
   // Booking
@@ -66,11 +72,17 @@ const BookingScreen = () => {
       payment: payment,
     };
 
-    alert('Next step: Checkout method');
-
     for (const item of carts.cart) {
-      await dispatch(createNewBooking(item));
+      try {
+        await dispatch(resetBooking());
+        await dispatch(createNewBooking(item));
+        await dispatch(resetCart());
+      } catch (error) {
+        console.error(error);
+        window.alert('Failed');
+      }
     }
+    window.alert('Next step: Checkout method');
   };
 
   return (
@@ -96,32 +108,34 @@ const BookingScreen = () => {
             {/* Display user reserve */}
             <div>
               <span className="font-bold text-[20px]">Your Reserve</span>
-              {cart.map((item, index) => {
-                return (
-                  <ul key={index}>
-                    <li className="py-2">
-                      <span className="font-bold text-[18px]">
-                        Room:{index + 1}
-                      </span>
-                    </li>
-                    <li>
-                      <span className="font-semibold">Room Type:</span>{' '}
-                      {item.name}
-                    </li>
-                    <li>
-                      <span className="font-semibold">Check In:</span>{' '}
-                      {date(item.checkIn)}
-                    </li>
-                    <li>
-                      <span className="font-semibold">Check Out:</span>{' '}
-                      {date(item.checkOut)}
-                    </li>
-                    <li>
-                      <span className="font-semibold">Guest:</span> {item.guest}
-                    </li>
-                  </ul>
-                );
-              })}
+              {cart &&
+                cart.map((item, index) => {
+                  return (
+                    <ul key={index}>
+                      <li className="py-2">
+                        <span className="font-bold text-[18px]">
+                          Room:{index + 1}
+                        </span>
+                      </li>
+                      <li>
+                        <span className="font-semibold">Room Type:</span>{' '}
+                        {item.name}
+                      </li>
+                      <li>
+                        <span className="font-semibold">Check In:</span>{' '}
+                        {date(item.checkIn)}
+                      </li>
+                      <li>
+                        <span className="font-semibold">Check Out:</span>{' '}
+                        {date(item.checkOut)}
+                      </li>
+                      <li>
+                        <span className="font-semibold">Guest:</span>{' '}
+                        {item.guest}
+                      </li>
+                    </ul>
+                  );
+                })}
             </div>
 
             {/* Payment method */}
@@ -164,7 +178,7 @@ const BookingScreen = () => {
               <button
                 onClick={onSubmit}
                 className={
-                  user && cart.length > 0
+                  user && (cart && cart.length) > 0
                     ? 'rounded mt-6 bg-blue-400 text-white px-4 py-2 hover:bg-blue-200'
                     : 'rounded mt-6 bg-blue-400 text-white px-4 py-2 disabled pointer-events-none opacity-50'
                 }

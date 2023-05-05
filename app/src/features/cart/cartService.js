@@ -31,9 +31,14 @@ const fetchCart = () => {
   }
 };
 
+const resetCart = async () => {
+  localStorage.removeItem('cart');
+};
+
 const cartService = {
   fetchCart,
   addToCart,
+  resetCart,
 };
 
 export default cartService;

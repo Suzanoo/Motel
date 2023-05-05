@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaCartArrowDown } from 'react-icons/fa';
 import { logout, reset } from '../features/auth/authSlice';
@@ -8,6 +8,7 @@ import logo from '../public/assets/logo.png';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [header, setHeader] = useState(false);
 
@@ -21,6 +22,7 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(logout());
     dispatch(reset());
+    navigate('/');
   };
 
   return (
@@ -70,7 +72,13 @@ const Header = () => {
           </Link>
 
           {!user ? (
-            <Link to="/login">login</Link>
+            <Link
+              to={{
+                pathname: '/login',
+              }}
+            >
+              login
+            </Link>
           ) : (
             <Link onClick={handleLogout}>logout</Link>
           )}

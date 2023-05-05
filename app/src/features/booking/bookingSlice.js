@@ -38,6 +38,21 @@ export const createNewBooking = createAsyncThunk(
   }
 );
 
+export const resetBooking = createAsyncThunk(
+  'booking/reset-booking',
+  async (thunkAPI) => {
+    try {
+      return await bookingService.resetBooking();
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Slice
 export const bookingSlice = createSlice({
   name: 'booking',
@@ -65,6 +80,9 @@ export const bookingSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        state.booking = null;
+      })
+      .addCase(resetBooking.fulfilled, (state) => {
         state.booking = null;
       });
   },

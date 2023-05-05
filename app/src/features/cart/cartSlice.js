@@ -53,6 +53,21 @@ export const fetchCart = createAsyncThunk(
   }
 );
 
+export const resetCart = createAsyncThunk(
+  'cart/reset-cart',
+  async (thunkAPI) => {
+    try {
+      return await cartService.resetCart();
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Slice
 export const cartSlice = createSlice({
   name: 'cart',
@@ -94,6 +109,10 @@ export const cartSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(resetCart.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.cart = null;
       });
   },
 });

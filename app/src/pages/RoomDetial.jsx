@@ -26,7 +26,7 @@ const RoomDetail = () => {
   const [guest, setGuest] = useState('2 Guest');
 
   // Add into cart
-  const onSubmit = (el) => {
+  const onSubmit = async (el) => {
     el.preventDefault();
     const reserve = {
       name: room.roomName,
@@ -36,7 +36,11 @@ const RoomDetail = () => {
       guest,
     };
 
-    dispatch(addToCart(reserve));
+    try {
+      await dispatch(addToCart(reserve));
+    } catch (e) {
+      window.alert('Fail');
+    }
   };
 
   // Check if checkInDate and checkOutDate are not null
@@ -115,7 +119,7 @@ const RoomDetail = () => {
                       : 'btn btn-lg btn-primary fw-full py-2'
                   }
                 >
-                  Book now form {room.price} THB
+                  Add to cart
                 </button>
               </div>
             </form>

@@ -23,11 +23,10 @@ function Home() {
 
             {/* Create New One*/}
             <div className="flex mx-auto justify-center">
-              Create New Room :{' '}
+              ||| :
               <Link
-                className="hover:scale-110 ml-4"
+                className="text-blue-500 hover:scale-110 ml-4"
                 to="/new-room"
-                style={{ color: 'orange' }}
               >
                 Create New Room
               </Link>{' '}

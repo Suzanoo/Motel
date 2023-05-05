@@ -5,45 +5,50 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
 
+/**
+ * Login from any page then after finish login process, ho to back to that page?
+ * 1.Create a function to store the current location in local storage
+ * 2.Modify the login link in the header to pass the current location as a state:
+ * 3.In the Login component, get the previous location from the state passed by the link:
+ * 4.Call the setPrevLocation function in the Login component:
+ */
 /*
+
+
  store the previous location before navigating to the login page 
  and then redirect the user back to that location after a successful login
 */
 
 function Login() {
-  // 1)
   const initialState = {
     email: '',
     password: '',
   };
 
-  // 2).
   const [formValue, setformValue] = useState(initialState);
   const { email, password } = formValue;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // 3).
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
+  // Previous location configuration
   const [prevLocation, setPrevLocation] = useState(null);
 
-  // 4).
-  // Get previous location before navigating to login page
+  // Get previous location
   useEffect(() => {
     setPrevLocation(window.localStorage.getItem('prevLocation'));
   }, []);
 
-  // 5).
   useEffect(() => {
     if (isError) {
       toast.error('Wrong email or password');
     }
 
+    // Redirect to previous location or home page
     if (isSuccess) {
-      // Redirect to previous location or home page
       const location = prevLocation ? prevLocation : '/';
       window.localStorage.removeItem('prevLocation');
       navigate(location);

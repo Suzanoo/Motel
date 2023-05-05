@@ -13,15 +13,15 @@ const BookingStep = ({ step1, step2, handleLogin }) => {
         Login
       </Link>
 
-      <Link
-        to="/checkout"
-        onClick={!step2 ? (e) => e.preventDefault() : null}
+      <div
+        // to="/checkout"
+        // onClick={!step2 ? (e) => e.preventDefault() : null}
         className={
           step2 ? 'text-blue-500' : 'disabled pointer-events-none opacity-50'
         }
       >
         Deposit
-      </Link>
+      </div>
     </div>
   );
 };

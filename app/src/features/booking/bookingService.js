@@ -17,9 +17,14 @@ const createNewBooking = async (bookingData) => {
   return data;
 };
 
+const resetBooking = async () => {
+  localStorage.removeItem('booking');
+};
+
 // Create services
 const bookingService = {
   createNewBooking,
+  resetBooking,
 };
 
 export default bookingService;

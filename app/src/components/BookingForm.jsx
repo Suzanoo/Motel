@@ -16,7 +16,7 @@ const Booking = ({ rooms }) => {
   const navigate = useNavigate();
 
   // Define state
-  const [roomName, setRoomName] = useState('Gemini');
+  const [roomName, setRoomName] = useState(null);
   const [roomId, setRoomId] = useState('');
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
@@ -44,7 +44,7 @@ const Booking = ({ rooms }) => {
   }, [cart, isError, isSuccess, message, navigate, dispatch]);
 
   // Add to cart
-  const onSubmit = (el) => {
+  const onSubmit = async (el) => {
     el.preventDefault();
     const reserve = {
       name: roomName,
@@ -53,12 +53,16 @@ const Booking = ({ rooms }) => {
       checkOut: checkOutDate,
       guest,
     };
-
-    dispatch(addToCart(reserve));
+    try {
+      await dispatch(addToCart(reserve));
+    } catch (e) {
+      window.alert('Fail');
+    }
   };
 
   // Check if checkInDate and checkOutDate are not null
   const isDatesNotNull = checkInDate !== null && checkOutDate !== null;
+  const isRoomNotNull = roomName !== null;
 
   return (
     <>
@@ -106,7 +110,7 @@ const Booking = ({ rooms }) => {
           <button
             type="submit"
             className={
-              !isDatesNotNull
+              !isDatesNotNull || !isRoomNotNull
                 ? 'btn btn-lg btn-primary flex-1 text-white h-full pointer-events-none opacity-50'
                 : 'btn btn-lg btn-primary flex-1 text-white h-full'
             }
