@@ -33,16 +33,6 @@ services:
     networks:
       - app-network
 
-  admin:
-    build:
-      context: ./admin
-      dockerfile: Dockerfile.admin
-    container_name: admin
-    ports:
-      - '3001:3001'
-    networks:
-      - app-network
-
 volumes:
   mongodb-data:
 

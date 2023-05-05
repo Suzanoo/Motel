@@ -1,3 +1,5 @@
+// @desc    Add products into cart
+// @access  User
 const addToCart = async (reserve) => {
   try {
     // Get cart from localStorage or create new cart if it doesn't exist

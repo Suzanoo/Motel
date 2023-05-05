@@ -17,36 +17,11 @@ const filterObj = (obj, ...allowedFields) => {
 
 exports.uploadRoomImg = uploadImg.single('images'); // same name in schema and input from frontend
 exports.resizeRoomImg = resizeImg.resizeProductPicture;
-
-// @desc    Fetch all rooms
-// @route   GET /api/v1/rooms
-// @access  Public
 exports.getAllRooms = CRUD.getAll(Room);
-
-// @desc    Create new room
-// @route   POST /api/v1/rooms
-// @access  Admin
 exports.createRoom = CRUD.createOne(Room);
-
-// @desc    Delete a rooms
-// @route   DELETE /api/v1/rooms/:id
-// @access  Admin
 exports.deleteRoom = CRUD.deleteOne(Room);
-
-// @desc    Fetch a rooms by room ID
-// @route   GET /api/v1/rooms
-// @access  Public
 exports.getRoom = CRUD.getOne(Room);
-
-// @desc    Fetch a rooms by room slug
-// @route   GET /api/v1/rooms/:slug
-// @access  Admin
 exports.getRoomBySlug = CRUD.getOneBySlug(Room);
-
-// @desc    Update room data (bypass)
-// @route   PATCH /api/v1/rooms/:id
-// @access  Admin
-// @fields allow to update: name, images
 
 // exports.updateRoom = CRUD.updateOne(Room);
 
@@ -60,6 +35,7 @@ exports.updateRoom = catchAsync(async (req, res, next) => {
     'images'
   );
 
+  // console.log(req.body);
   // console.log(req.file);
 
   // 2). Allow if there are images in request body

@@ -1,9 +1,8 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import { createNewRoom, getAllRooms, reset } from '../features/rooms/roomSlice';
+import { createNewRoom, resetRooms } from '../features/rooms/roomSlice';
 
 function CreateNewRoom() {
   // 1).Initial state
@@ -11,50 +10,17 @@ function CreateNewRoom() {
     roomName: '',
     roomNumber: '',
     roomType: '',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    accessories: [],
-    roomSize: '',
-    maxPerson: 2,
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,',
     price: '',
     priceDiscount: 0,
-    images: '',
   };
 
   // 2).Configure form fields
   const [formData, setFormData] = useState(initial);
-  const {
-    roomName,
-    roomNumber,
-    roomType,
-    description,
-    accessories,
-    roomSize,
-    maxPerson,
-    price,
-    priceDiscount,
-    images,
-  } = formData;
+  const { roomName, roomNumber, roomType, description, price, priceDiscount } =
+    formData;
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // 3).Access store
-  const { isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.products
-  );
-
-  // 4).Events handlers
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-      dispatch(reset());
-    }
-
-    if (isSuccess) {
-      // navigate('/');
-    }
-  }, [isError, isSuccess, message, navigate, dispatch]);
 
   const handleChange = (event) => {
     setFormData((prevState) => ({
@@ -63,147 +29,169 @@ function CreateNewRoom() {
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
-    const productData = {
+    const roomData = {
       roomName,
       roomNumber,
       roomType,
       description,
-      // accessories,
-      roomSize: +roomSize,
-      maxPerson: +maxPerson,
       price: +price,
       priceDiscount: +priceDiscount,
-      images,
     };
-    dispatch(createNewRoom(productData));
-    navigate('/admin');
-    dispatch(getAllRooms());
+    try {
+      // Create a new room
+      await dispatch(createNewRoom(roomData));
+      // Reset rooms in store for next refreshing
+      await dispatch(resetRooms);
+      // Set blank form
+      setFormData(initial);
+    } catch (error) {
+      console.error('Error creating room:', error);
+    }
   };
-
-  if (isLoading) return <div className="spinner"></div>;
 
   //5).JSX Rendering
   return (
     <>
-      <section className="heading">
-        <p>Create New Room</p>
-      </section>
-      <section className="form">
-        <form onSubmit={onSubmit}>
-          {/* Name */}
-          <div className="form-group">
-            <label htmlFor="roomName">Name</label>
-            <input
-              className="form-control"
-              type="text"
-              name="roomName"
-              value={roomName}
-              onChange={handleChange}
-            />
-          </div>
-          {/* Room Number */}
-          <div className="form-group">
-            <label htmlFor="roomNumber">Room Number</label>
-            <input
-              className="form-control"
-              type="text"
-              name="roomNumber"
-              value={roomNumber}
-              onChange={handleChange}
-            />
-          </div>
-          {/* Room Type */}
-          <div className="form-group">
-            <label htmlFor="roomType">Room Type</label>
-            <select name="roomType" value={roomType} onChange={handleChange}>
-              <option value="">--Choose...--</option>
-              {['sea view', 'delux', 'suit', 'middle age'].map(
-                (option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                )
-              )}
-            </select>
-          </div>
-          {/* Description */}
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <input
-              className="form-control"
-              type="text"
-              name="description"
-              value={description}
-              onChange={handleChange}
-            />
-          </div>
-          {/* Accessories */}
-
-          {/* Room Size */}
-          <div className="form-group">
-            <label htmlFor="roomSize">Room Size</label>
-            <input
-              className="form-control"
-              type="number"
-              name="roomSize"
-              value={roomSize}
-              onChange={handleChange}
-            />
-          </div>
-          {/* Max Guests */}
-          <div className="form-group">
-            <label htmlFor="maxPerson">Max Guest</label>
-            <input
-              className="form-control"
-              type="number"
-              name="maxPerson"
-              value={maxPerson}
-              onChange={handleChange}
-            />
-          </div>
-          {/* Price */}
-          <div className="form-group">
-            <label htmlFor="price">Price</label>
-            <input
-              className="form-control"
-              type="number"
-              name="price"
-              value={price}
-              onChange={handleChange}
-            />
-          </div>
-          {/* Price Discount*/}
-          <div className="form-group">
-            <label htmlFor="priceDiscount">Price Discount</label>
-            <input
-              className="form-control"
-              type="number"
-              name="priceDiscount"
-              value={priceDiscount}
-              onChange={handleChange}
-            />
-          </div>
-          {/* Images */}
-          <div className="form-group">
-            <label htmlFor="imageCover">Images</label>
-            <input
-              type="text"
-              name="images"
-              value={images}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <button type="submit" className="btn btn-block">
-              Submit
-            </button>
-          </div>
-        </form>
-      </section>
+      <div className="flex justify-center mx-auto py-24 bg-pink-200">
+        <div className="flex-col w-2/3 mt-8">
+          <h1 className="font-bold mb-2">Create New Room:</h1>
+          <form
+            className=" bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+            onSubmit={onSubmit}
+          >
+            {/* Name */}
+            <div className="py-2">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="roomName"
+              >
+                Name
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 
+                px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text"
+                name="roomName"
+                value={roomName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            {/* Room Number */}
+            <div className="py-2">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="roomNumber"
+              >
+                Room Number
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 
+                px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text"
+                name="roomNumber"
+                value={roomNumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            {/* Room Type */}
+            <div className="py-2">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="roomType"
+              >
+                Room Type
+              </label>
+              <select
+                className="shadow appearance-none border rounded w-full py-2 
+                px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                name="roomType"
+                value={roomType}
+                onChange={handleChange}
+              >
+                <option value="">--Choose...--</option>
+                {['sea view', 'deluxe', 'suit', 'middle age'].map(
+                  (option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+            {/* Description */}
+            <div className="py-2">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="description"
+              >
+                Description
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 
+                px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text"
+                name="description"
+                value={description}
+                onChange={handleChange}
+              />
+            </div>
+            {/* Accessories */}
+            {/* Price */}
+            <div className="py-2">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="price"
+              >
+                Price
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 
+                px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="number"
+                name="price"
+                value={price}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            {/* Price Discount*/}
+            <div className="py-2">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="priceDiscount"
+              >
+                Price Discount
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 
+                px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="number"
+                name="priceDiscount"
+                value={priceDiscount}
+                onChange={handleChange}
+              />
+            </div>
+            {/* Submit*/}
+            <div className="py-4">
+              <button
+                type="submit"
+                className="baseline text-white bg-primary hover:scale-110
+              font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+          <Link className="text-blue-400" to="/admin">
+            Back
+          </Link>
+        </div>
+      </div>
     </>
   );
 }

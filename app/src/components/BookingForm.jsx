@@ -21,7 +21,7 @@ const Booking = ({ rooms }) => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [guest, setGuest] = useState('2 Guest');
-  const { cart, isLoading, isError, isSuccess, message } = useSelector(
+  const { cart, isError, isSuccess, message } = useSelector(
     (state) => state.booking
   );
 
@@ -66,15 +66,17 @@ const Booking = ({ rooms }) => {
         <div className="flex flex-col w-full h-full lg:flex-row">
           {/* Room Dropdown */}
           <div className="flex-1 border-r">
-            <RoomName
-              rooms={rooms}
-              value={roomName}
-              onChange={(label, id) => {
-                setRoomName(label);
-                setRoomId(id);
-              }}
-              id="roomName"
-            />
+            {rooms.rooms && (
+              <RoomName
+                rooms={rooms}
+                value={roomName}
+                onChange={(label, id) => {
+                  setRoomName(label);
+                  setRoomId(id);
+                }}
+                id="roomName"
+              />
+            )}
           </div>
           {/* Check in */}
           <div className="flex-1 border-r">

@@ -13,11 +13,15 @@ const initialState = {
   message: '',
 };
 
-// Create async action-reducer
+/**
+ * Async action creator to create a new room
+ * @access  Admin
+ * @param   {object} data - Cart data
+ * @param   {object} thunkAPI - Redux Thunk API
+ * @returns {Promise} - Resolved with array of cart on success or rejected with error message on failure
+ */
 export const addToCart = createAsyncThunk(
-  // Action type
   'cart/add-to-cart',
-  // Payload
   async (reserve, thunkAPI) => {
     try {
       return await cartService.addToCart(reserve);
@@ -31,7 +35,7 @@ export const addToCart = createAsyncThunk(
   }
 );
 
-// Create async action-reducer
+// Fetch cart
 export const fetchCart = createAsyncThunk(
   // Action type
   'cart/fetch-cart',

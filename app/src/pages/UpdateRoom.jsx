@@ -1,12 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
-import { updateRoom, reset, getAllRooms } from '../features/rooms/roomSlice';
+import {
+  updateRoom,
+  getAllRooms,
+  resetRooms,
+} from '../features/rooms/roomSlice';
 
 function UpdateRoom() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { rooms, isLoading } = useSelector((state) => state.rooms);
@@ -16,11 +19,7 @@ function UpdateRoom() {
     roomName: '',
     roomNumber: '',
     roomType: '',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    accessories: [],
-    roomSize: '',
-    maxPerson: 2,
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,',
     price: '',
     priceDiscount: 0,
     images: '',
@@ -35,11 +34,11 @@ function UpdateRoom() {
 
   // Fill data into field depend on user select from Table:
   useEffect(() => {
-    const room = rooms.data.data.find((t) => t._id === id);
-    if (room) {
+    if (rooms) {
+      const room = rooms.data.data.find((t) => t._id === id);
       setFormData(room);
     }
-  }, [rooms, id]);
+  }, [rooms, id, dispatch]);
 
   // Assign form fields
   const {
@@ -47,7 +46,6 @@ function UpdateRoom() {
     roomNumber,
     roomType,
     description,
-    // accessories,
     price,
     priceDiscount,
     images,
@@ -62,7 +60,7 @@ function UpdateRoom() {
   };
 
   // Upload image
-  const handleUploadImg = (e) => {
+  const handleUploadImg = async (e) => {
     const file = e.target.files[0];
 
     // Create a new FormData object
@@ -70,32 +68,31 @@ function UpdateRoom() {
     formData.append('images', file); // same name in schema, multer will catch this name
 
     try {
-      dispatch(updateRoom({ id, formData }))
-        .then(dispatch(getAllRooms()))
-        .then(dispatch(reset()))
-        .then(navigate('/admin'));
+      await dispatch(updateRoom({ id, formData }));
+      await dispatch(resetRooms());
+      await dispatch(getAllRooms());
     } catch (e) {}
   };
 
   // Update room
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
-    // Fetch values from form
     const roomData = {
       roomName,
       roomNumber,
       roomType,
       description,
-      // accessories,
-      price: Number(formData.price),
-      priceDiscount: Number(formData.priceDiscount),
+      price: +price,
+      priceDiscount: +priceDiscount,
       images,
     };
 
     try {
-      dispatch(updateRoom({ id, roomData }));
-      navigate('/admin');
+      await dispatch(updateRoom({ id: id, roomData: roomData }));
+      await dispatch(resetRooms());
+      // await dispatch(getAllRooms());
+      // navigate('/admin');
     } catch (error) {
       // console.log(error);
     }
@@ -271,6 +268,9 @@ function UpdateRoom() {
               </button>
             </div>
           </form>
+          <Link className="text-blue-400" to="/admin">
+            Back
+          </Link>
         </div>
       </div>
     </>

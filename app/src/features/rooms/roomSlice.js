@@ -1,13 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import roomService from './roomService';
 
-/*
-1.Fetch tour from localStorage & cast to JSON object
-2.Initialize state
-3.Create async action-reducer:
-4.Create slice
-*/
-
 // Fetch rooms from localStorage & cast to JSON object
 const rooms = JSON.parse(localStorage.getItem('rooms'));
 
@@ -20,11 +13,15 @@ const initialState = {
   message: '',
 };
 
-// Create async action-reducer
+/**
+ * Async action creator to get all rooms
+ * @access  All
+ * @route   GET /api/v1/booking
+ * @param   {object} thunkAPI - Redux Thunk API
+ * @returns {Promise} - Resolved with array of rooms on success or rejected with error message on failure
+ */
 export const getAllRooms = createAsyncThunk(
-  // Action type
   'rooms/get-all_rooms',
-  // Payload
   async (thunkAPI) => {
     try {
       return await roomService.getAll();
@@ -38,12 +35,17 @@ export const getAllRooms = createAsyncThunk(
   }
 );
 
+/**
+ * Async action creator to create a new room
+ * @access  Admin
+ * @route   POST /api/v1/booking
+ * @param   {object} data - Room data
+ * @param   {object} thunkAPI - Redux Thunk API
+ * @returns {Promise} - Resolved with array of rooms on success or rejected with error message on failure
+ */
 export const createNewRoom = createAsyncThunk(
-  // Action type
   'rooms/create-new-room',
-  // Payload:
   async (data, thunkAPI) => {
-    // console.log(productData);
     try {
       return await roomService.createNewRoom(data);
     } catch (err) {
@@ -56,14 +58,19 @@ export const createNewRoom = createAsyncThunk(
   }
 );
 
+/**
+ * Async action creator to update a room
+ * @access  Admin
+ * @route   PATCH /api/v1/booking/id
+ * @param   {object} param0 - Object containing room ID and form data
+ * @param   {object} thunkAPI - Redux Thunk API
+ * @returns {Promise} - Resolved with updated room on success or rejected with error message on failure
+ */
 export const updateRoom = createAsyncThunk(
-  // Action type
   'rooms/update-room',
-  //  * createAsyncThunk expects a single argument creator function
-  //  * that takes a single argument as payload
-  async ({ id, formData }, thunkAPI) => {
+  async ({ id, roomData }, thunkAPI) => {
     try {
-      return await roomService.updateRoom(id, formData);
+      return await roomService.updateRoom(id, roomData);
     } catch (err) {
       const message =
         err.message ||
@@ -74,14 +81,34 @@ export const updateRoom = createAsyncThunk(
   }
 );
 
+/**
+ * Async action creator to update a room
+ * @access  Admin
+ * @route   DELETE /api/v1/booking/id
+ * @param   {object} param0 - Object containing room ID and form data
+ * @param   {object} thunkAPI - Redux Thunk API
+ * @returns {Promise} - Resolved with updated room on success or rejected with error message on failure
+ */
 export const deleteRoom = createAsyncThunk(
-  // Action type
   'rooms/delete-room',
-  //  * createAsyncThunk expects a single argument creator function
-  //  * that takes a single argument as payload
   async (id, thunkAPI) => {
     try {
       await roomService.deleteRoom(id);
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const resetRooms = createAsyncThunk(
+  'rooms/reset-room',
+  async (thunkAPI) => {
+    try {
+      return await roomService.resetRooms();
     } catch (err) {
       const message =
         err.message ||
@@ -149,6 +176,9 @@ export const roomSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(resetRooms.fulfilled, (state) => {
+        state.rooms = null;
       });
   },
 });

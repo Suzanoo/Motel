@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
-import { deleteRoom, getAllRooms } from '../features/rooms/roomSlice';
-import '../public/css/table.scss';
+import {
+  deleteRoom,
+  getAllRooms,
+  resetRooms,
+} from '../features/rooms/roomSlice';
 
 const Table = () => {
   const dispatch = useDispatch();
@@ -57,12 +60,14 @@ const Table = () => {
     navigate(`/update-room/${id}`);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       'Are you sure you want to delete this product?'
     );
     if (confirmDelete) {
-      dispatch(deleteRoom(id));
+      await dispatch(deleteRoom(id));
+      await dispatch(resetRooms());
+      await dispatch(getAllRooms());
       navigate('/admin');
     }
   };
@@ -72,7 +77,7 @@ const Table = () => {
     setRooms(JSON.parse(localStorage.getItem('rooms')));
 
     const searchText = document
-      .querySelector('.product-table input')
+      .querySelector('.room-table input')
       .value.toLowerCase();
     const filteredProducts = rooms.data.data.filter(
       (room) =>
@@ -84,78 +89,114 @@ const Table = () => {
   };
 
   return (
-    <div className="product-table flex flex-col mx-auto justify-center min-w-[640px]">
-      <h1 className="font-bold">Rooms</h1>
-      <div className="py-4">
-        <input
-          type="text"
-          className="p-2 rounded"
-          placeholder="Filter..."
-          onChange={handleFilter}
-        />
-      </div>
+    <>
+      <div className="room-table overflow-x-auto mx-6 lg:mx-auto">
+        <h1 className="font-bold">Rooms</h1>
+        <div className="py-4">
+          <input
+            type="text"
+            className="p-2 rounded"
+            placeholder="Filter..."
+            onChange={handleFilter}
+          />
+        </div>
 
-      <table className="rwd-table" key={JSON.stringify(rooms)}>
-        <thead>
-          <tr>
-            <th onClick={() => handleSort('roomName')}>
-              Name {sortIcon('roomName')}
-            </th>
-            <th onClick={() => handleSort('roomType')}>
-              Type {sortIcon('roomType')}
-            </th>
-            <th onClick={() => handleSort('price')}>
-              Price {sortIcon('price')}
-            </th>
-
-            <th>Detail</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredProducts.map((room) => (
-            <tr key={room._id}>
-              <td>{room.roomName}</td>
-              <td>{room.roomType}</td>
-              <td>{`${room.price}.THB`}</td>
-              <td>
-                <button
-                  className="detailBtn"
-                  onClick={() => handleDetail(room.slug)}
-                >
-                  Detail
-                </button>
-              </td>
-              <td>
-                <button
-                  className="updateBtn"
-                  onClick={() => handleUpdate(room._id)}
-                >
-                  Update
-                </button>
-              </td>
-              <td>
-                <button
-                  className="deleteBtn"
-                  onClick={() => handleDelete(room._id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex py-4">
-        <button
-          className="bg-blue-400 text-white p-2 rounded hover:scale-110"
-          onClick={handleUpdateTable}
+        <table
+          className="min-w-full border border-gray-300 divide-y divide-gray-300"
+          key={JSON.stringify(rooms)}
         >
-          Refresh Table
-        </button>
+          <thead className="bg-gray-5">
+            <tr>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                onClick={() => handleSort('roomName')}
+              >
+                Name {sortIcon('roomName')}
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                onClick={() => handleSort('roomType')}
+              >
+                Type {sortIcon('roomType')}
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                onClick={() => handleSort('price')}
+              >
+                Price {sortIcon('price')}
+              </th>
+
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Detail
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Update
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Delete
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-300">
+            {filteredProducts.map((room) => (
+              <tr key={room._id}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {room.roomName}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {room.roomType}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{`${room.price}.THB`}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <button
+                    className="text-blue-500"
+                    onClick={() => handleDetail(room.slug)}
+                  >
+                    Detail
+                  </button>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <button
+                    className="text-yellow-500"
+                    onClick={() => handleUpdate(room._id)}
+                  >
+                    Update
+                  </button>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <button
+                    className="text-red-500"
+                    onClick={() => handleDelete(room._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex py-4">
+          <button
+            className="bg-blue-400 text-white p-2 rounded hover:scale-110"
+            onClick={handleUpdateTable}
+          >
+            Refresh Table
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

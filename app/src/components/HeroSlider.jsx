@@ -27,7 +27,7 @@ const HeroSlider = ({ rooms }) => {
             >
               <div className="z-20 justify-center items-center text-white text-center ">
                 <div className="font-tertiary tracking-[6px] text-[24px] uppercase mb-2">
-                  Welcome and enjoy.
+                  Welcome to Taurus Motel.
                 </div>
                 {/* <button className="btn btn-sm btn-primary h-[45px] mx-auto font-tertiary tracking-[6px] uppercase">
                   see our room
