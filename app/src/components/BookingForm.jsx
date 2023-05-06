@@ -113,7 +113,7 @@ const Booking = ({ rooms }) => {
             className={
               !isDatesNotNull || !isRoomNotNull
                 ? 'btn btn-lg btn-primary flex-1 text-white h-full pointer-events-none opacity-50'
-                : 'btn btn-lg btn-primary flex-1 text-white h-full'
+                : 'btn btn-lg btn-primary flex-1 text-white h-full hover:text-orange-400'
             }
           >
             Add to cart

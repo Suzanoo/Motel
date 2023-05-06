@@ -67,7 +67,7 @@ const Header = () => {
             header ? 'text-primary' : 'text-white'
           } flex gap-x-2 lg:gap-x-8 font-tertiary tracking-[3px] text-[15px] items-center uppercase `}
         >
-          <Link to="/booking">
+          <Link className="hover:text-orange-400 transition" to="/booking">
             <FaCartArrowDown />
           </Link>
 
@@ -76,11 +76,17 @@ const Header = () => {
               to={{
                 pathname: '/login',
               }}
+              className="hover:text-orange-400 transition"
             >
               login
             </Link>
           ) : (
-            <Link onClick={handleLogout}>logout</Link>
+            <Link
+              className="hover:text-orange-400 transition"
+              onClick={handleLogout}
+            >
+              logout
+            </Link>
           )}
         </div>
       </div>
