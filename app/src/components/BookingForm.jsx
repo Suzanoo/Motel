@@ -21,7 +21,8 @@ const Booking = ({ rooms }) => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [guest, setGuest] = useState('2 Guest');
-  const { cart, isError, isSuccess, message } = useSelector(
+
+  const { booking, isError, isSuccess, message } = useSelector(
     (state) => state.booking
   );
 
@@ -41,7 +42,7 @@ const Booking = ({ rooms }) => {
     }
 
     dispatch(reset());
-  }, [cart, isError, isSuccess, message, navigate, dispatch]);
+  }, [booking, isError, isSuccess, message, navigate, dispatch]);
 
   // Add to cart
   const onSubmit = async (el) => {
@@ -49,8 +50,8 @@ const Booking = ({ rooms }) => {
     const reserve = {
       name: roomName,
       room: roomId,
-      checkIn: checkInDate,
-      checkOut: checkOutDate,
+      checkIn: String(checkInDate),
+      checkOut: String(checkOutDate),
       guest,
     };
     try {

@@ -1,14 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import bookingService from './bookingService';
 
-/*
-1.Fetch tour from localStorage & cast to JSON object
-2.Initialize state
-3.Create async action-reducer:
-4.Create slice
-*/
-
-// Fetch tours from localStorage & cast to JSON object
+// First fetch
 const booking = JSON.parse(localStorage.getItem('booking'));
 
 // Initialize state
@@ -20,11 +13,9 @@ const initialState = {
   message: '',
 };
 
-// Create async action-reducer
+// Create new booking
 export const createNewBooking = createAsyncThunk(
-  // Action type
   'booking/new-booking',
-  // Payload
   async (bookingData, thunkAPI) => {
     try {
       return await bookingService.createNewBooking(bookingData);
@@ -38,6 +29,7 @@ export const createNewBooking = createAsyncThunk(
   }
 );
 
+// Reset
 export const resetBooking = createAsyncThunk(
   'booking/reset-booking',
   async (thunkAPI) => {

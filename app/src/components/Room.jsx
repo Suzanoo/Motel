@@ -7,11 +7,13 @@ const Room = ({ room }) => {
       {/* Image */}
       <div className="overflow-hidden">
         {room.images[0] && (
-          <img
-            className="group-hover:scale-110 transition-all duration-300 w-full"
-            src={`${require(`../public/assets/detail-img/${room.images[0]}`)}`}
-            alt=""
-          />
+          <Link to={`/room/${room.slug}`}>
+            <img
+              className="group-hover:scale-110 transition-all duration-300 w-full"
+              src={`${require(`../public/assets/detail-img/${room.images[0]}`)}`}
+              alt=""
+            />
+          </Link>
         )}
       </div>
       {/* Rating */}

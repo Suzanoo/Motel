@@ -12,6 +12,7 @@ import {
 
 import { resetCart } from '../features/cart/cartSlice';
 
+// Convert string to date format
 const date = (d) => {
   const dateObj = new Date(d);
   const year = dateObj.getFullYear();
@@ -23,11 +24,9 @@ const date = (d) => {
 };
 
 const BookingScreen = () => {
-  // Variable
+  // Configuration
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // State init
   const { user } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
   const { booking, isError, isSuccess, message } = useSelector(
@@ -35,7 +34,7 @@ const BookingScreen = () => {
   );
   const [payment, setPayment] = useState('paypal');
 
-  // Listen for booking
+  // Listen to booking
   useEffect(() => {
     if (isError) {
       toast.error('Something went wrong');
@@ -48,22 +47,24 @@ const BookingScreen = () => {
     dispatch(reset());
   }, [booking, isError, isSuccess, message, navigate, dispatch]);
 
-  // Listen for radio buttons
+  // Listen to radio buttons
   const handlePayment = (e) => {
     setPayment(e.target.value);
   };
 
   // Store current location before navigating to login page
+  // Redirect to this page after login has completed
   const handleLogin = () => {
     window.localStorage.setItem('prevLocation', '/booking');
     navigate('/login');
   };
 
+  // Edit
   const handleEdit = () => {
     window.alert('Next implementation');
   };
 
-  // Booking
+  // Checkout
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -95,7 +96,7 @@ const BookingScreen = () => {
               // if user: disable login button, enable checkout button
               <BookingStep step1={false} step2={true} />
             ) : (
-              // if no: enable login button, disable checkout button
+              // if no user: enable login button, disable checkout button
               <BookingStep
                 step1={true}
                 step2={false}
@@ -138,7 +139,7 @@ const BookingScreen = () => {
                 })}
             </div>
 
-            {/* Payment method */}
+            {/* Choose payment method */}
             <span className="font-bold text-[20px] mt-4">
               Select payment method
             </span>
@@ -166,7 +167,7 @@ const BookingScreen = () => {
               </label>
             </div>
 
-            {/* Edit && Checkout  */}
+            {/* Edit */}
             <div className="flex gap-x-4">
               <button
                 onClick={handleEdit}
@@ -175,6 +176,7 @@ const BookingScreen = () => {
                 Edit
               </button>
 
+              {/* Checkout */}
               <button
                 onClick={onSubmit}
                 className={

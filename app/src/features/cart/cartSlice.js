@@ -37,9 +37,7 @@ export const addToCart = createAsyncThunk(
 
 // Fetch cart
 export const fetchCart = createAsyncThunk(
-  // Action type
   'cart/fetch-cart',
-  // Payload
   async (thunkAPI) => {
     try {
       return await cartService.fetchCart();
@@ -53,6 +51,7 @@ export const fetchCart = createAsyncThunk(
   }
 );
 
+// Reset cart
 export const resetCart = createAsyncThunk(
   'cart/reset-cart',
   async (thunkAPI) => {

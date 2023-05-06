@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaCheck } from 'react-icons/fa';
 
@@ -12,6 +12,7 @@ import ScrollToTop from '../components/ScrollToTop';
 import { addToCart } from '../features/cart/cartSlice';
 
 const RoomDetail = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const store = useSelector((state) => state.rooms);
   const { slug } = useParams();
@@ -25,19 +26,25 @@ const RoomDetail = () => {
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [guest, setGuest] = useState('2 Guest');
 
-  // Add into cart
+  // Append into cart array
   const onSubmit = async (el) => {
     el.preventDefault();
     const reserve = {
       name: room.roomName,
       room: room._id,
-      checkIn: checkInDate,
-      checkOut: checkOutDate,
+      checkIn: String(checkInDate),
+      checkOut: String(checkOutDate),
       guest,
     };
 
     try {
+      // Append to cart array
       await dispatch(addToCart(reserve));
+      // Reset form fields
+      setCheckInDate(null);
+      setCheckOutDate(null);
+      setGuest('2 Guest');
+      navigate(`/room/${room.slug}`);
     } catch (e) {
       window.alert('Fail');
     }

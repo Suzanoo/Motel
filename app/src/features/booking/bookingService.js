@@ -13,10 +13,10 @@ const createNewBooking = async (bookingData) => {
     }
   );
   if (data) localStorage.setItem('booking', JSON.stringify(data));
-  console.log(data);
   return data;
 };
 
+// Reset
 const resetBooking = async () => {
   localStorage.removeItem('booking');
 };

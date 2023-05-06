@@ -10,7 +10,6 @@ const addToCart = async (reserve) => {
 
     // Save cart to localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
-    console.log(cart);
 
     return cart;
   } catch (error) {

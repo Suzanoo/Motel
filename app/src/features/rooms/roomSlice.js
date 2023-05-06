@@ -13,13 +13,7 @@ const initialState = {
   message: '',
 };
 
-/**
- * Async action creator to get all rooms
- * @access  All
- * @route   GET /api/v1/booking
- * @param   {object} thunkAPI - Redux Thunk API
- * @returns {Promise} - Resolved with array of rooms on success or rejected with error message on failure
- */
+// Get all
 export const getAllRooms = createAsyncThunk(
   'rooms/get-all_rooms',
   async (thunkAPI) => {
@@ -35,14 +29,7 @@ export const getAllRooms = createAsyncThunk(
   }
 );
 
-/**
- * Async action creator to create a new room
- * @access  Admin
- * @route   POST /api/v1/booking
- * @param   {object} data - Room data
- * @param   {object} thunkAPI - Redux Thunk API
- * @returns {Promise} - Resolved with array of rooms on success or rejected with error message on failure
- */
+// Create a new
 export const createNewRoom = createAsyncThunk(
   'rooms/create-new-room',
   async (data, thunkAPI) => {
@@ -58,14 +45,7 @@ export const createNewRoom = createAsyncThunk(
   }
 );
 
-/**
- * Async action creator to update a room
- * @access  Admin
- * @route   PATCH /api/v1/booking/id
- * @param   {object} param0 - Object containing room ID and form data
- * @param   {object} thunkAPI - Redux Thunk API
- * @returns {Promise} - Resolved with updated room on success or rejected with error message on failure
- */
+// Update (Bypass)
 export const updateRoom = createAsyncThunk(
   'rooms/update-room',
   async ({ id, roomData }, thunkAPI) => {
@@ -81,14 +61,7 @@ export const updateRoom = createAsyncThunk(
   }
 );
 
-/**
- * Async action creator to update a room
- * @access  Admin
- * @route   DELETE /api/v1/booking/id
- * @param   {object} param0 - Object containing room ID and form data
- * @param   {object} thunkAPI - Redux Thunk API
- * @returns {Promise} - Resolved with updated room on success or rejected with error message on failure
- */
+// Delete
 export const deleteRoom = createAsyncThunk(
   'rooms/delete-room',
   async (id, thunkAPI) => {
@@ -104,6 +77,7 @@ export const deleteRoom = createAsyncThunk(
   }
 );
 
+// Reset
 export const resetRooms = createAsyncThunk(
   'rooms/reset-room',
   async (thunkAPI) => {
