@@ -8,12 +8,12 @@
 
 ## Intro
 
-- Use Docker to create 4 services of app: mongodb, server, app, admin
+- Use Docker to create 3 services: mongodb, server, app
 - There are things refer to this services name
 
-  - Database name in .env file : `mongodb://mongodb:27017/tours`
+  - Database name in .env file : `mongodb://mongodb:27017/<DB-name>`
   - proxy definition in package.json file of app service, and admin service: ` "proxy": "http://server:5000",`
-  - In server service and admin service when we deal with API endpoints, we will use service name instead of URL
+  - In app service when we deal with API endpoints, we will use service name instead of URL
 
 - You can change services name at docker-compose.yml and change the previous reference too.
 
@@ -45,7 +45,7 @@
 
   - `DATABASE_LOCAL=mongodb://mongodb:27017/<DB-name>`
 
-- In app/package.json file and admin/package.json file
+- In app/package.json file file
 - `"proxy": "http://server:5000"`,
 
 ## Demo
