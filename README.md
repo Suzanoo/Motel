@@ -4,7 +4,7 @@
 
 ## About
 
-- MERN app for Hotel, Resort booking and management.
+- MERN app for Hotel, Resort booking process.
 
 ## Intro
 
@@ -12,7 +12,7 @@
 - There are things refer to this services name
 
   - Database name in .env file : `mongodb://mongodb:27017/<DB-name>`
-  - proxy definition in package.json file of app service, and admin service: ` "proxy": "http://server:5000",`
+  - Proxy definition in app/package.json: ` "proxy": "http://server:5000",`
   - In app service when we deal with API endpoints, we will use service name instead of URL
 
 - You can change services name at docker-compose.yml and change the previous reference too.
