@@ -8,11 +8,12 @@
 
 ## Intro
 
-- Use Docker to create 3 services: mongodb, server, app
+- Use Docker to create 3 services: mongodb, server, app in docker-compose.yml
 - There are things refer to this services name
 
-  - Database name in .env file : `mongodb://mongodb:27017/<DB-name>`
-  - Proxy definition in app/package.json: ` "proxy": "http://server:5000",`
+  - Database name in .env file : `mongodb://mongodb:27017/<DB-name>` the second "mongodb" is service name in docker-compose.yml
+  - Proxy definition in app/package.json: ` "proxy": "http://server:5000",` "server"
+    is service name in docker-compose.yml
   - In app service when we deal with API endpoints, we will use service name instead of URL
 
 - You can change services name at docker-compose.yml and change the previous reference too.
@@ -31,13 +32,29 @@
 
 ### `docker-compose up -d --build`
 
+## or Run services only(after build)
+
+### `docker-compose up -d`
+
 ## Stop services
 
 ### `docker-compose down`
 
+## Update TailwindCSS
+
+- If you want to executed or update CSS with Tailwind, go to app folder and run script(see app/package.json)
+
+### `cd app`
+
+### `npm run build-css`
+
+- Then run docker build for app service again(make sure you are in main folder)
+
+### `docker-compose up -d --build app`
+
 ## Note
 
-1).To create first admin please see information in adminRoute.js
+1).To create first admin please see information in server/routes/adminRoute.js
 
 2).Things to know about Dockerize, we use container name instead of hostname
 

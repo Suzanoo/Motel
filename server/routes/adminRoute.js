@@ -8,7 +8,7 @@ const router = express.Router();
 NOTE:
 
 Firt time we place signup path here to create first admin
-After that we move to below under "Admin controller"
+After that we move to below(line 31) under "Admin controller"
 for issues "Only existing admin allow to registed new admin"  
 
 router.post('/signup', authCtrl.adminSignup); 
@@ -26,7 +26,7 @@ router.patch('/updateMyPassword', authCtrl.updatePassword);
 router.patch('/updateUserData', userCtrl.updateUserData);
 router.delete('/deleteCurrentUser', userCtrl.deleteCurrentUser);
 
-// Admin roles
+// Admin controllers
 router.use(authCtrl.restrictTo('admin'));
 router.post('/signup', authCtrl.adminSignup); // Only existing admin allow to registed new admin
 router.route('/').get(userCtrl.getAllUsers).post(userCtrl.createUser);
