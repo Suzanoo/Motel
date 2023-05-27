@@ -23,6 +23,7 @@
 - [VSCode](https://code.visualstudio.com/download)
 - [Git](https://git-scm.com/downloads)
 - [NodeJS](https://nodejs.org/en/download/)
+- [Docker](https://docs.docker.com/engine/install/)
 
 ## Environments:
 
